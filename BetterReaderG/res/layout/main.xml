@@ -4,11 +4,10 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
-    <TextView
+    <WebView
             android:id="@+id/text_v"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World, Main"
             />
 </ScrollView>
 
