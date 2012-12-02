@@ -1,17 +1,18 @@
-package com.staschum;
+package com.staschum.ui;
 
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.staschum.R;
 
 public class BaseActivity extends SlidingFragmentActivity {
 
 	private int titleRes;
-	protected SherlockFragment mFrag;
+	protected SherlockListFragment mFrag;
 
 	public BaseActivity(int titleRes) {
 		this.titleRes = titleRes;

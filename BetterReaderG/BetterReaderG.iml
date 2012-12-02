@@ -44,6 +44,15 @@
     <orderEntry type="module" module-name="Sliding_menu" />
     <orderEntry type="module" module-name="Ab_sherlock" />
     <orderEntry type="library" name="libs" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/htmlcleaner-2.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-        >
-    <TextView
-            android:id="@+id/text_v"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-</ScrollView>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="center">
+	<ProgressBar
+			android:id="@+id/progress_bar"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"/>
+	<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+		<TextView
+				android:id="@+id/text_v"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:visibility="gone"/>
+	</ScrollView>
+</RelativeLayout>
 
