@@ -9,3 +9,5 @@ gen
 BetterReaderG/libs/sliding_menu/Sliding_menu.iml
 BetterReaderG/BetterReaderG.iml
 BetterReaderG/BetterReaderG.iml
+BetterReaderG/gen/*
+BetterReaderG/*.iml

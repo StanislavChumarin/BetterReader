@@ -9,7 +9,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.staschum.R;
 import com.staschum.Utils;
@@ -32,6 +34,11 @@ public class MainFragment extends SherlockFragment {
 
 	private static String URL = "url";
 
+	//TODO refactor this to be useful for different sites
+	private String basicUrl = "http://www.ex.ua";
+
+	private String title;
+
 	public static Fragment createFragment(String url) {
 		Fragment fragment = new MainFragment();
 		Bundle args = new Bundle();
@@ -51,10 +58,12 @@ public class MainFragment extends SherlockFragment {
 		final Activity activity = getSherlockActivity();
 		final String mainText = "main";
 		final String secondaryText = "secondary";
-
+		final String valueUrl = "url";
+		title = activity.getTitle().toString();
 		String url = getArguments().getString(URL, "http://www.google.com/");
 		getActivity().findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
 		getActivity().findViewById(R.id.list_content).setVisibility(View.GONE);
+
 		Utils.getHtmlByUrlAsync(url, new ResultReceiver(new Handler()) {
 			@Override
 			protected void onReceiveResult(int resultCode, final Bundle resultData) {
@@ -70,18 +79,30 @@ public class MainFragment extends SherlockFragment {
 						HtmlCleaner htmlCleaner = new HtmlCleaner();
 
 						TagNode tagNode = htmlCleaner.clean(htmlSource);
+
+						title = htmlCleaner.getInnerHtml(tagNode.findElementByName("title", true));
+
 						List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 						try {
 							Object[] articles = tagNode.evaluateXPath(".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td//a");
+							List<TagNode> nodesToPublish = new ArrayList<TagNode>();
 							for (int i = 0; i < articles.length; i++) {
-								String value = Utils.removeTags(htmlCleaner.getInnerHtml((TagNode) articles[i]).trim());
-								if ((i % 2) == 0) {
+								TagNode article = (TagNode) articles[i];
+								if (article.getAttributeByName("href").contains("user") || htmlCleaner.getInnerHtml(article).contains("img"))
+									continue;
+								nodesToPublish.add(article);
+							}
+							for (int i = 0; i < nodesToPublish.size(); i++) {
+								TagNode article = nodesToPublish.get(i);
+								String value = Utils.removeTags(htmlCleaner.getInnerHtml(article).trim());
+								if (article.hasAttribute("class")) {
+									result.get(result.size() - 1).put(secondaryText, value);
+								} else {
 
 									HashMap<String, String> map = new HashMap<String, String>();
 									map.put(mainText, value);
+									map.put(valueUrl, basicUrl + article.getAttributeByName("href"));
 									result.add(map);
-								} else {
-									result.get(i/2).put(secondaryText, value);
 								}
 							}
 						} catch (XPatherException e) {
@@ -91,12 +112,20 @@ public class MainFragment extends SherlockFragment {
 					}
 
 					@Override
-					protected void onPostExecute(List<Map<String, String>> s) {
-						SimpleAdapter rowAdapter = new SimpleAdapter(activity, s, R.layout.two_lines_list_row, new String[]{mainText, secondaryText}, new int[]{R.id.row_main_text, R.id.row_small_text});
+					protected void onPostExecute(final List<Map<String, String>> mapList) {
+						activity.setTitle(title);
+						SimpleAdapter rowAdapter = new SimpleAdapter(activity, mapList, R.layout.two_lines_list_row, new String[]{mainText, secondaryText}, new int[]{R.id.row_main_text, R.id.row_small_text});
 						getActivity().findViewById(R.id.progress_bar).setVisibility(View.GONE);
 						ListView contentList = (ListView) activity.findViewById(R.id.list_content);
 						contentList.setVisibility(View.VISIBLE);
 						contentList.setAdapter(rowAdapter);
+
+						contentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+							@Override
+							public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+								((MenuFragment.HtmlViewer) activity).viewHtml(mapList.get(i).get(valueUrl));
+							}
+						});
 					}
 				}.execute();
 			}

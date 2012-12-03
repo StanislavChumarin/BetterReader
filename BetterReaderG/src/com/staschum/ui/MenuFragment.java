@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.staschum.R;
 import com.staschum.Utils;
@@ -55,7 +54,7 @@ public class MenuFragment extends SherlockListFragment {
 					Object[] menus = tagNode.evaluateXPath("/body/table/tbody/tr/td/table/tbody/tr/td[1]//a");
 					final List<String> urls = new ArrayList<String>();
 					for (int i = 0; i < menus.length; i++) {
-						TagNode menu = (TagNode)menus[i];
+						TagNode menu = (TagNode) menus[i];
 						menuNames.add(Utils.removeTags(htmlCleaner.getInnerHtml(menu)));
 						urls.add(url + menu.getAttributeByName("href"));
 					}
