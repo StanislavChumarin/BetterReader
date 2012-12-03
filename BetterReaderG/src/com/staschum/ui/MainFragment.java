@@ -1,5 +1,6 @@
 package com.staschum.ui;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.staschum.R;
 import com.staschum.Utils;
+import org.htmlcleaner.HtmlCleaner;
+import org.htmlcleaner.TagNode;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,16 +46,30 @@ public class MainFragment extends SherlockFragment {
 		getActivity().findViewById(R.id.text_v).setVisibility(View.GONE);
 		Utils.getHtmlByUrlAsync(url, new ResultReceiver(new Handler()) {
 			@Override
-			protected void onReceiveResult(int resultCode, Bundle resultData) {
+			protected void onReceiveResult(int resultCode, final Bundle resultData) {
 				if (resultCode != Utils.STATUS_OK)
 					return;
 
-				String htmlSource = resultData.getString(Utils.RESULT_KEY, "");
+				new AsyncTask<Void, Void, String>() {
 
-				TextView tv = (TextView) getActivity().findViewById(R.id.text_v);
-				tv.setText(htmlSource);
-				getActivity().findViewById(R.id.progress_bar).setVisibility(View.GONE);
-				tv.setVisibility(View.VISIBLE);
+					@Override
+					protected String doInBackground(Void... voids) {
+						String htmlSource = resultData.getString(Utils.RESULT_KEY, "");
+
+						HtmlCleaner htmlCleaner = new HtmlCleaner();
+
+						TagNode tagNode = htmlCleaner.clean(htmlSource);
+						return htmlCleaner.getInnerHtml(tagNode.findElementByName("body", true)).trim();
+					}
+
+					@Override
+					protected void onPostExecute(String s) {
+						TextView tv = (TextView) getActivity().findViewById(R.id.text_v);
+						tv.setText(s);
+						getActivity().findViewById(R.id.progress_bar).setVisibility(View.GONE);
+						tv.setVisibility(View.VISIBLE);
+					}
+				}.execute();
 			}
 		});
 	}
