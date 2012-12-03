@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.staschum.R;
 import com.staschum.Utils;
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
+import org.htmlcleaner.XPatherException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,25 +51,30 @@ public class MenuFragment extends SherlockListFragment {
 				CleanerProperties props = htmlCleaner.getProperties();
 
 				TagNode tagNode = htmlCleaner.clean(resultData.getString(Utils.RESULT_KEY, ""));
-				TagNode menuRow = tagNode.getElementsByAttValue("class", "menu_text", true, false)[0];
-				TagNode[] menus = menuRow.getElementsByName("a", false);
-
-				final List<String> urls = new ArrayList<String>();
-				for (int i = 0; i < menus.length; i++) {
-					menuNames.add(Utils.removeTags(htmlCleaner.getInnerHtml(menus[i])));
-					urls.add(url + menus[i].getAttributeByName("href"));
-				}
-
-				ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.menu_list_row, R.id.text);
-				arrayAdapter.addAll(menuNames);
-				getListView().setAdapter(arrayAdapter);
-				getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-						htmlViewer.viewHtml(urls.get(i));
-						((MainActivity) htmlViewer).getSlidingMenu().showContent(true);
+				try {
+					Object[] menus = tagNode.evaluateXPath("/body/table/tbody/tr/td/table/tbody/tr/td[1]//a");
+					final List<String> urls = new ArrayList<String>();
+					for (int i = 0; i < menus.length; i++) {
+						TagNode menu = (TagNode)menus[i];
+						menuNames.add(Utils.removeTags(htmlCleaner.getInnerHtml(menu)));
+						urls.add(url + menu.getAttributeByName("href"));
 					}
-				});
+					ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.menu_list_row, R.id.text);
+					arrayAdapter.addAll(menuNames);
+					getListView().setAdapter(arrayAdapter);
+					getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+							htmlViewer.viewHtml(urls.get(i));
+							((MainActivity) htmlViewer).getSlidingMenu().showContent(true);
+						}
+					});
+				} catch (XPatherException e) {
+					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+				}
+//				TagNode menuRow = tagNode.getElementsByAttValue("class", "menu_text", true, false)[0];
+//				TagNode[] menus = menuRow.getElementsByName("a", false);
+
 			}
 		});
 
