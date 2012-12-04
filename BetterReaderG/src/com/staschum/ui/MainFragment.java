@@ -13,11 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.staschum.DataViewDescription;
 import com.staschum.R;
 import com.staschum.Utils;
+import com.staschum.managers.DescriptionManager;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
 import org.htmlcleaner.XPatherException;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,6 +56,7 @@ public class MainFragment extends SherlockFragment {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		final Activity activity = getSherlockActivity();
@@ -60,7 +64,7 @@ public class MainFragment extends SherlockFragment {
 		final String secondaryText = "secondary";
 		final String valueUrl = "url";
 		title = activity.getTitle().toString();
-		String url = getArguments().getString(URL, "http://www.google.com/");
+		final String url = getArguments().getString(URL, "http://www.google.com/");
 		getActivity().findViewById(R.id.progress_bar).setVisibility(View.VISIBLE);
 		getActivity().findViewById(R.id.list_content).setVisibility(View.GONE);
 
@@ -69,6 +73,8 @@ public class MainFragment extends SherlockFragment {
 			protected void onReceiveResult(int resultCode, final Bundle resultData) {
 				if (resultCode != Utils.STATUS_OK)
 					return;
+
+
 
 				new AsyncTask<Void, Void, List<Map<String, String>>>() {
 
@@ -80,11 +86,21 @@ public class MainFragment extends SherlockFragment {
 
 						TagNode tagNode = htmlCleaner.clean(htmlSource);
 
+						DataViewDescription description;
+						try {
+							description = new DescriptionManager(getActivity()).getDescription(url, tagNode);
+							title = htmlCleaner.getInnerHtml(tagNode.findElementByName("title", true));
+						} catch (JSONException e) {
+							e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+						} catch (XPatherException e) {
+							e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+						}
+
 						title = htmlCleaner.getInnerHtml(tagNode.findElementByName("title", true));
 
 						List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 						try {
-							Object[] articles = tagNode.evaluateXPath(".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td//a");
+							Object[] articles = tagNode.evaluateXPath(".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/a");
 							List<TagNode> nodesToPublish = new ArrayList<TagNode>();
 							for (int i = 0; i < articles.length; i++) {
 								TagNode article = (TagNode) articles[i];
