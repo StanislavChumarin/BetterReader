@@ -13,7 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,8 +40,12 @@ public class DescriptionManager {
 			}
 		}
 		Iterator<String> iterator = cachedJson.keys();
+		Set<String> keys = new TreeSet<String>();
 		while(iterator.hasNext()) {
 			String key = iterator.next();
+			keys.add(key);
+		}
+		for (String key : keys) {
 			FragmentDescriptor description = new FragmentDescriptor(Utils.getJSONObject(cachedJson, key));
 			if (url.startsWith(description.getTargetUrl()) && Utils.getNodesByXPath(tagNode, description.getRequiredXPath(), Object.class).size() != 0) {
 				return description;

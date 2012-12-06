@@ -52,7 +52,6 @@ public class MenuFragment extends SherlockFragment {
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				((MainActivity) contentViewer).getSlidingMenu().showContent(true);
 				contentViewer.viewContent(supportedSites.get(i).getUrl(), "/");
 
 			}

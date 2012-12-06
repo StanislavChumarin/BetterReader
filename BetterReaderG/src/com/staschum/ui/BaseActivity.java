@@ -27,7 +27,7 @@ public class BaseActivity extends SlidingFragmentActivity {
 
 		FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();
 		mFrag = new MenuFragment();
-		t.replace(R.id.menu_frame, mFrag);
+		t.replace(R.id.menu_fragment, mFrag);
 		t.commit();
 
 		SlidingMenu slidingMenu = getSlidingMenu();

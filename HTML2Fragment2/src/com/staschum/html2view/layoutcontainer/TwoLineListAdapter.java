@@ -79,12 +79,20 @@ public class TwoLineListAdapter extends BaseListAdapter {
 		String mainTextXPath = Utils.getString(Utils.getDataFromJsonArray(jsonArray, 0), "xpath");
 		String secondaryTextXPath = Utils.getString(Utils.getDataFromJsonArray(jsonArray, 1), "xpath");
 		for (TagNode tagNode : tagNodes) {
-			String mainText = Utils.readTextFromTag(Utils.getNodesByXPath(tagNode, mainTextXPath, TagNode.class).get(0));
+			List<TagNode> nodesByXPath = Utils.getNodesByXPath(tagNode, mainTextXPath, TagNode.class);
+			if(nodesByXPath.isEmpty())
+				continue;
+			String mainText = Utils.readTextFromTag(nodesByXPath.get(0));
 			if (mainText.isEmpty())
 				continue;
 			Map<String, String> entry = new HashMap<String, String>();
 			entry.put(mainTextKey, mainText);
-			String secondaryText = Utils.readTextFromTag(Utils.getNodesByXPath(tagNode, secondaryTextXPath, TagNode.class).get(0));
+			List<TagNode> nodesByXPath1 = Utils.getNodesByXPath(tagNode, secondaryTextXPath, TagNode.class);
+			String secondaryText = "";
+			if (!nodesByXPath1.isEmpty()) {
+				secondaryText = Utils.readTextFromTag(nodesByXPath1.get(0));
+			}
+
 			entry.put(secondaryTextKey, secondaryText);
 			result.add(entry);
 		}
