@@ -3,7 +3,7 @@ package com.staschum.ui;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -12,7 +12,7 @@ import com.staschum.R;
 public class BaseActivity extends SlidingFragmentActivity {
 
 	private int titleRes;
-	protected SherlockListFragment mFrag;
+	protected SherlockFragment mFrag;
 
 	public BaseActivity(int titleRes) {
 		this.titleRes = titleRes;

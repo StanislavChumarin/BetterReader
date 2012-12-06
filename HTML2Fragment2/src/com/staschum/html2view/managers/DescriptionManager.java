@@ -1,13 +1,11 @@
-package com.staschum.managers;
+package com.staschum.html2view.managers;
 
 import android.content.Context;
-import com.staschum.App;
-import com.staschum.DataViewDescription;
-import com.staschum.R;
-import org.htmlcleaner.HtmlCleaner;
+import com.staschum.html2view.DataViewDescription;
+import com.staschum.html2view.Utils;
+import com.staschum.html2view.objects.FragmentDescriptor;
 import org.htmlcleaner.TagNode;
 import org.htmlcleaner.XPatherException;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,18 +25,25 @@ import java.util.Iterator;
 public class DescriptionManager {
 
 	private Context context;
+	private JSONObject cachedJson;
 
 	public DescriptionManager(Context context) {
 		this.context = context;
 	}
 
-	public DataViewDescription getDescription(String url, TagNode tagNode) throws JSONException, XPatherException {
-		JSONObject filters = new JSONObject(readRawTextFile(context, R.raw.exua));
-		Iterator<String> iterator = filters.keys();
+	public FragmentDescriptor getDescription(String url, TagNode tagNode, int fileId, boolean renewJson) {
+		if (cachedJson == null || renewJson) {
+			try {
+				cachedJson = new JSONObject(readRawTextFile(context, fileId));
+			} catch (JSONException e) {
+				throw new IllegalArgumentException(e);
+			}
+		}
+		Iterator<String> iterator = cachedJson.keys();
 		while(iterator.hasNext()) {
-			 String key = iterator.next();
-			DataViewDescription description = new DataViewDescription(filters.getJSONObject(key));
-			if (url.startsWith(description.getTargetUrl()) && tagNode.evaluateXPath(description.getRequiredXPath()).length != 0) {
+			String key = iterator.next();
+			FragmentDescriptor description = new FragmentDescriptor(Utils.getJSONObject(cachedJson, key));
+			if (url.startsWith(description.getTargetUrl()) && Utils.getNodesByXPath(tagNode, description.getRequiredXPath(), Object.class).size() != 0) {
 				return description;
 			}
 		}

@@ -1,47 +1,96 @@
-{"filter1": {
-     "url": "http://www.ex.ua/",
-     "should_exist": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/a/img",
-     "layout_name": "main",
-     "data": [
-         {"type": "list",
-         "id": "list_content",
-         "parent_xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td",
-         "layout_name": "two_lines_list_row",
-         "data": [
-             {"type":"text",
-              "id": "row_main_text",
-              "xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/p/a/b"},
-              {"type":"text",
-               "id": "row_small_text",
-               "xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/p/a[@class='info']" }
-             ],
-         "action": {
-            "open": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/p/a/@href"
-            }
-         }
-     ]
-  },
- "filter2": {
-    "url": "http://www.ex.ua/",
-    "should_exist": ".//*[@id='body_element']//table[@class='include_0']",
-    "layout_name": "main",
-    "data": [
-        {"type": "list",
-        "id": "list_content",
-        "parent_xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td",
-        "layout_name": "two_lines_list_row",
+{
+    "filter1": {
+        "url": "http://www.ex.ua/",
+        "should_exist": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/a/img",
+        "layout_name": "single_list",
         "data": [
-            {"type":"text",                  
-             "id": "row_main_text",
-             "xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/a/b"},
-             {"type":"text",
-              "id": "row_small_text",
-               "xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/p/a[@class='info']" }
-            ],
-        "action": {
-           "open": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/a/@href"
-           }
-        }
-    ]
- }
+            {
+                "type": "list",
+                "id": "list_content",
+                "parent_xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td",
+                "data": [
+                    {
+                        "type": "list_row",
+                        "layout_name": "two_lines_list_row",
+                        "data": [
+                            {
+                                "type": "text",
+                                "id": "row_main_text",
+                                "xpath": "/p/a/b"
+                            },
+                            {
+                                "type": "text",
+                                "id": "row_small_text",
+                                "xpath": "/p/a[@class='info']"
+                            }
+                        ]
+                    }
+                ],
+                "action": {
+                    "open": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/p/a/@href"
+                }
+            }
+        ]
+    },
+    "filter2": {
+        "url": "http://www.ex.ua/",
+        "should_exist": ".//*[@id='body_element']//table[@class='include_0']",
+        "layout_name": "single_list",
+        "data": [
+            {
+                "type": "list",
+                "id": "list_content",
+                "parent_xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td",
+                "data": [
+                    {
+                        "type": "list_row",
+                        "layout_name": "two_lines_list_row",
+                        "data": [
+                            {
+                                "type": "text",
+                                "id": "row_main_text",
+                                "xpath": "/a/b"
+                            },
+                            {
+                                "type": "text",
+                                "id": "row_small_text",
+                                "xpath": "/p/a[@class='info']"
+                            }
+                        ]
+                    }
+                ],
+                "action": {
+                    "open": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/a/@href"
+                }
+            }
+        ]
+    },
+    "filter3": {
+        "url": "http://www.ex.ua/",
+        "should_exist": "/body/table/tbody/tr/td/table/tbody/tr/td[1]//a",
+        "layout_name": "single_list",
+        "data": [
+            {
+                "type": "list",
+                "id": "list_content",
+                "parent_xpath": "/body/table/tbody/tr/td/table/tbody/tr/td[1]",
+                "data": [
+                    {
+                        "type": "list_row",
+                        "layout_name": "one_line_list_row",
+                        "data": [
+                            {
+                                "type": "text",
+                                "id": "text",
+                                "xpath": "//a"
+                            }
+                        ]
+                    }
+                ],
+                "action": {
+                    "open": "/body/table/tbody/tr/td/table/tbody/tr/td[1]//a/@href"
+                }
+            }
+        ]
+    }
 }

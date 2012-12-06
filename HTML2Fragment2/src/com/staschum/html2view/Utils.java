@@ -1,16 +1,22 @@
-package com.staschum;
+package com.staschum.html2view;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.util.Log;
-import com.staschum.ui.MainActivity;
 import org.apache.http.util.ByteArrayBuffer;
+import org.htmlcleaner.TagNode;
+import org.htmlcleaner.XPatherException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,6 +60,24 @@ public abstract class Utils {
 		return result;
 	}
 
+	public static JSONArray getJSONArray(JSONObject jsonObject, String key) {
+		try {
+			return jsonObject.getJSONArray(key);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static JSONObject getJSONObject(JSONObject jsonObject, String key) {
+		try {
+			return jsonObject.getJSONObject(key);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	//convert it to ExecutorService
 	private static class AsyncHtmlGetter extends AsyncTask<Void, Void, Void> {
 
@@ -93,7 +117,7 @@ public abstract class Utils {
 				/* Convert the Bytes read to a String. */
 				html = new String(baf.toByteArray());
 			} catch (Exception e) {
-				Log.e(MainActivity.class.getSimpleName(), "", e);
+				Log.e(Utils.class.getSimpleName(), "", e);
 			}
 			return null;
 		}
@@ -107,4 +131,44 @@ public abstract class Utils {
 
 	}
 
+
+	public static JSONObject getDataFromJsonArray(JSONArray jsonArray, int index) {
+		try {
+			return jsonArray.getJSONObject(index);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static String getString(JSONObject data, String key) {
+		try {
+			return data.getString(key);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static <T> List<T> getNodesByXPath(TagNode tagNode, String xPath, Class<T> returnClass) {
+		List<T> result = new ArrayList<T>();
+		try {
+			Object[] objects = tagNode.evaluateXPath(xPath);
+			for (Object object : objects) {
+				result.add((T) object);
+			}
+			return result;
+		} catch (XPatherException e) {
+			e.printStackTrace();
+			return result;
+		}
+	}
+
+	public static String readTextFromTag(TagNode tagNode) {
+		String mainText = tagNode.getText().toString();
+		if(mainText == null || mainText.isEmpty()) {
+			return "";
+		}
+		return mainText;
+	}
 }

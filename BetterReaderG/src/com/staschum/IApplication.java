@@ -1,7 +1,7 @@
 package com.staschum;
 
 import android.content.Context;
-import com.staschum.managers.DescriptionManager;
+import com.staschum.html2view.managers.DescriptionManager;
 
 /**
  * Created with IntelliJ IDEA.
