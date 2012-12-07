@@ -11,8 +11,13 @@
                 "data": [
                     {
                         "type": "list_row",
-                        "layout_name": "two_lines_list_row",
+                        "layout_name": "image_w_two_lines_list_row",
                         "data": [
+                            {
+                                "type":"image",
+                                "id":"row_image",
+                                "selector":"a>img"
+                            },
                             {
                                 "type": "text",
                                 "id": "row_main_text",

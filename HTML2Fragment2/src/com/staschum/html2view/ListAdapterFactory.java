@@ -2,6 +2,7 @@ package com.staschum.html2view;
 
 import android.content.Context;
 import com.staschum.html2view.layoutcontainer.BaseListAdapter;
+import com.staschum.html2view.layoutcontainer.ImageW2LinesAdapter;
 import com.staschum.html2view.layoutcontainer.OneLineListAdapter;
 import com.staschum.html2view.layoutcontainer.TwoLineListAdapter;
 import com.staschum.html2view.objects.FragmentDescriptor;
@@ -31,6 +32,14 @@ public class ListAdapterFactory {
 			@Override
 			public BaseListAdapter getListAdapter(Context context) {
 				return new OneLineListAdapter(context);
+			}
+		},
+		IMAGE_W_TWO_LINES_LIST_ROW {
+			@Override
+			public BaseListAdapter getListAdapter(Context context) {
+				ImageW2LinesAdapter imageW2LinesAdapter = new ImageW2LinesAdapter(context);
+				imageW2LinesAdapter.imageLoader.clearCache();
+				return imageW2LinesAdapter;
 			}
 		};
 

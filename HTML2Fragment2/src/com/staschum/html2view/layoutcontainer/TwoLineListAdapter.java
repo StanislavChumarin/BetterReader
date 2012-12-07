@@ -77,26 +77,22 @@ public class TwoLineListAdapter extends BaseListAdapter {
 
 	@Override
 	public void setData(Elements elements, List<FragmentDescriptor> descriptors) {
-		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
 		if(descriptors.size() < 2) {
 			return;
 		}
 		String mainTextSelector = descriptors.get(0).getSelector();
 		String secondaryTextSelector = descriptors.get(1).getSelector();
 		for (Element parentElement : elements) {
-			Elements nodesByXPath = parentElement.select(mainTextSelector);
-			String mainText = nodesByXPath.text();
+			String mainText = parentElement.select(mainTextSelector).text();
 			if (mainText.isEmpty())
 				continue;
 			Map<String, String> entry = new HashMap<String, String>();
 			entry.put(mainTextKey, mainText);
-			Elements nodesByXPath1 = parentElement.select(secondaryTextSelector);
-			String secondaryText = nodesByXPath1.text();
+			String secondaryText = parentElement.select(secondaryTextSelector).text();
 
 			entry.put(secondaryTextKey, secondaryText);
-			result.add(entry);
+			content.add(entry);
 		}
-		content = result;
 		count = content.size();
 	}
 
