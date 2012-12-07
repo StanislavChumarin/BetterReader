@@ -1,19 +1,19 @@
 package com.staschum.html2view.managers;
 
 import android.content.Context;
-import com.staschum.html2view.DataViewDescription;
 import com.staschum.html2view.Utils;
 import com.staschum.html2view.objects.FragmentDescriptor;
-import org.htmlcleaner.TagNode;
-import org.htmlcleaner.XPatherException;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.nodes.Document;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,7 +31,7 @@ public class DescriptionManager {
 		this.context = context;
 	}
 
-	public FragmentDescriptor getDescription(String url, TagNode tagNode, int fileId, boolean renewJson) {
+	public FragmentDescriptor getDescription(String url, Document doc, int fileId, boolean renewJson) {
 		if (cachedJson == null || renewJson) {
 			try {
 				cachedJson = new JSONObject(readRawTextFile(context, fileId));
@@ -46,8 +46,8 @@ public class DescriptionManager {
 			keys.add(key);
 		}
 		for (String key : keys) {
-			FragmentDescriptor description = new FragmentDescriptor(Utils.getJSONObject(cachedJson, key));
-			if (url.startsWith(description.getTargetUrl()) && Utils.getNodesByXPath(tagNode, description.getRequiredXPath(), Object.class).size() != 0) {
+			FragmentDescriptor description = new FragmentDescriptor(FragmentDescriptor.getJSONObject(cachedJson, key));
+			if (url.startsWith(description.getTargetUrl()) && doc.select(description.getRequiredXPath()).size() != 0) {
 				return description;
 			}
 		}

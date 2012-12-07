@@ -3,7 +3,6 @@ package com.staschum.html2view.layoutcontainer;
 import android.content.Context;
 import android.widget.BaseAdapter;
 import com.staschum.html2view.H2VListAdapter;
-import com.staschum.html2view.H2VObject;
 
 /**
  * Created with IntelliJ IDEA.

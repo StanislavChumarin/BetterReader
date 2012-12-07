@@ -9,8 +9,6 @@
         <option name="RES_FOLDER_RELATIVE_PATH" value="/res" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/assets" />
         <option name="LIBS_FOLDER_RELATIVE_PATH" value="/libs" />
-        <option name="REGENERATE_R_JAVA" value="true" />
-        <option name="REGENERATE_JAVA_BY_AIDL" value="true" />
         <option name="USE_CUSTOM_APK_RESOURCE_FOLDER" value="false" />
         <option name="CUSTOM_APK_RESOURCE_FOLDER" value="" />
         <option name="USE_CUSTOM_COMPILER_MANIFEST" value="false" />
@@ -43,16 +41,8 @@
     <orderEntry type="module" module-name="Sliding_menu" />
     <orderEntry type="module" module-name="Ab_sherlock" />
     <orderEntry type="library" name="libs" level="project" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://D:/Downloads/htmlcleaner-2.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="module" module-name="HTML2Fragment2" />
+    <orderEntry type="library" name="jsoup-1.7.1" level="project" />
   </component>
 </module>
 

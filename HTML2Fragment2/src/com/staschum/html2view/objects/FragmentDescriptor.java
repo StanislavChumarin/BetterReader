@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,23 +24,64 @@ public class FragmentDescriptor {
 	}
 
 	public String getLayoutName() {
-		return Utils.getString(fragmentDescriptorSrc, "layout_name");
+		return getString(fragmentDescriptorSrc, "layout_name");
 	}
 
-	public JSONArray getData() {
+	public List<FragmentDescriptor> getData() {
+		List<FragmentDescriptor> result = new ArrayList<FragmentDescriptor>();
 		try {
-			return fragmentDescriptorSrc.getJSONArray("data");
+			JSONArray array = fragmentDescriptorSrc.getJSONArray("data");
+			for(int i = 0; i < array.length(); i++) {
+				result.add(new FragmentDescriptor(array.getJSONObject(i)));
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+			return result;
+		}
+		return result;
+	}
+
+	public String getTargetUrl() {
+		return getString(fragmentDescriptorSrc, "url");
+	}
+
+	public String getRequiredXPath() {
+		return getString(fragmentDescriptorSrc, "should_exist");
+	}
+
+	public String getSelector() {
+		return getString(fragmentDescriptorSrc, "selector");
+	}
+
+
+
+	private static String getString(JSONObject data, String key) {
+		try {
+			return data.getString(key);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+
+	public static JSONObject getJSONObject(JSONObject jsonObject, String key) {
+		try {
+			return jsonObject.getJSONObject(key);
+		} catch (JSONException e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public String getTargetUrl() {
-		return Utils.getString(fragmentDescriptorSrc, "url");
+	public FragmentDescriptor getAction() {
+		return new FragmentDescriptor(getJSONObject(fragmentDescriptorSrc, "action"));
 	}
 
-	public String getRequiredXPath() {
-		return Utils.getString(fragmentDescriptorSrc, "should_exist");
+	public String getItemSelector() {
+		return getString(fragmentDescriptorSrc, "item");
+	}
+
+	public String getAttr() {
+		return getString(fragmentDescriptorSrc, "attr");
 	}
 }

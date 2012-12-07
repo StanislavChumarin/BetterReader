@@ -4,14 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import com.staschum.R;
-import com.staschum.WaitingFragment;
 import com.staschum.html2view.ContentViewer;
 import com.staschum.html2view.FragmentReady;
-import com.staschum.html2view.SingleListFragment;
 import com.staschum.html2view.ViewComposer;
-import com.staschum.html2view.managers.DescriptionManager;
-import com.staschum.html2view.objects.FragmentDescriptor;
-import org.htmlcleaner.TagNode;
 
 public class MainActivity extends BaseActivity implements ContentViewer {
 
@@ -36,22 +31,8 @@ public class MainActivity extends BaseActivity implements ContentViewer {
 
 	}
 
-	private boolean notHomeLink(TagNode tagNode) {
-		boolean result = true;
-		if (tagNode.getAttributeByName("a").equals("/")) {
-			result = false;
-		}
-		return result;
-	}
-
 	@Override
 	public void viewContent(String baseUrl, String url) {
-//		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//
-//		fragmentTransaction.replace(R.id.content, new WaitingFragment());
-//		fragmentTransaction.commit();
-//
-//		getSlidingMenu().showContent();
 
 		getSlidingMenu().showContent();
 
@@ -60,20 +41,12 @@ public class MainActivity extends BaseActivity implements ContentViewer {
 		vc.createFragment(baseUrl + url, R.raw.exua, new FragmentReady() {
 			@Override
 			protected void fragmentReady(Fragment fragment) {
-				replaceContent(fragment);
-//				FragmentTransaction fragmentTransaction = MainActivity.this.getSupportFragmentManager().beginTransaction();
-//				fragmentTransaction.replace(R.id.content, fragment);
-//				fragmentTransaction.addToBackStack(null);
-//				fragmentTransaction.commit();
-
+				FragmentTransaction fragmentTransaction = MainActivity.this.getSupportFragmentManager().beginTransaction();
+				fragmentTransaction.replace(R.id.content, fragment);
+				fragmentTransaction.addToBackStack(null);
+				fragmentTransaction.commit();
 			}
 		});
 	}
 
-	private void replaceContent(Fragment fragment) {
-		FragmentTransaction fragmentTransaction = MainActivity.this.getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(R.id.content, fragment);
-		fragmentTransaction.addToBackStack(null);
-		fragmentTransaction.commit();
-	}
 }

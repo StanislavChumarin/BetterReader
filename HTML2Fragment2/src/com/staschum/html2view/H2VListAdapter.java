@@ -1,7 +1,8 @@
 package com.staschum.html2view;
 
-import org.htmlcleaner.TagNode;
+import com.staschum.html2view.objects.FragmentDescriptor;
 import org.json.JSONArray;
+import org.jsoup.select.Elements;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface H2VListAdapter {
-	void setData(List<TagNode> tagNode, JSONArray jsonArray);
+	void setData(Elements elements, List<FragmentDescriptor> jsonArray);
 
 }

@@ -10,8 +10,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.staschum.R;
 import com.staschum.html2view.layoutcontainer.ContentFragment;
-import org.htmlcleaner.TagNode;
+import com.staschum.html2view.objects.FragmentDescriptor;
 import org.json.JSONObject;
+import org.jsoup.select.Elements;
 
 import java.util.List;
 
@@ -49,14 +50,19 @@ public class SingleListFragment extends ContentFragment {
 
 		basicUrl = getArguments().getString(URL_KEY);
 
-		JSONObject data = Utils.getDataFromJsonArray(fragmentData, 0);
-		int id = activity.getResources().getIdentifier(Utils.getString(data, "id"), "id", activity.getPackageName());
-		ListView listView = (ListView) activity.findViewById(id);
-		List<TagNode> dataForAdapter = Utils.getNodesByXPath(tagNode, Utils.getString(data, "parent_xpath"), TagNode.class);
-		ListAdapter listAdapter = ListAdapterFactory.createListAdapter(activity, dataForAdapter, Utils.getJSONArray(data, "data"));
+		activity.setTitle(document.select("title").text());
+
+		if(fragmentData.isEmpty())
+			return;
+
+		FragmentDescriptor data = fragmentData.get(0);
+		ListView listView = (ListView) activity.findViewById(R.id.list_content);
+		Elements dataForAdapter = document.select(data.getSelector());
+		ListAdapter listAdapter = ListAdapterFactory.createListAdapter(activity, dataForAdapter, data.getData());
 		listView.setAdapter(listAdapter);
 
-		final List<String> actions = Utils.getNodesByXPath(tagNode, Utils.getString(Utils.getJSONObject(data, "action"), "open"), String.class);
+		FragmentDescriptor action = data.getAction();
+		final List<String> actions = Utils.getValues(document.select(action.getItemSelector()), action.getAttr());
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override

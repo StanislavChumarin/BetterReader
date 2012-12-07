@@ -8,10 +8,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewer;
-import com.staschum.html2view.ViewComposer;
 import com.staschum.model.SupportedSite;
 
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class MenuFragment extends SherlockFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.list_fragment, null);
+		return inflater.inflate(R.layout.menu_fragment, null);
 	}
 
 	@Override
@@ -47,7 +45,7 @@ public class MenuFragment extends SherlockFragment {
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.menu_list_row, R.id.text);
 		arrayAdapter.addAll(getNames(supportedSites));
 
-		ListView listView = (ListView) getActivity().findViewById(R.id.list_content);
+		ListView listView = (ListView) getActivity().findViewById(R.id.menu_content);
 		listView.setAdapter(arrayAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -56,7 +54,6 @@ public class MenuFragment extends SherlockFragment {
 
 			}
 		});
-		getActivity().findViewById(R.id.list_content).setVisibility(View.VISIBLE);
 
 //		Utils.getHtmlByUrlAsync(url + "/", new ResultReceiver(new Handler()) {
 //			@Override

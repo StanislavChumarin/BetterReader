@@ -1,7 +1,5 @@
 package com.staschum.html2view.objects;
 
-import android.widget.ListView;
-
 /**
  * Created with IntelliJ IDEA.
  * User: schumarin

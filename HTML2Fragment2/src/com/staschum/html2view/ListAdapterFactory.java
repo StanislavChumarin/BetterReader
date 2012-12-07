@@ -1,12 +1,13 @@
 package com.staschum.html2view;
 
 import android.content.Context;
-import android.widget.ListAdapter;
 import com.staschum.html2view.layoutcontainer.BaseListAdapter;
-import com.staschum.html2view.layoutcontainer.OneLineListAdapter;import com.staschum.html2view.layoutcontainer.TwoLineListAdapter;
-import org.htmlcleaner.TagNode;
+import com.staschum.html2view.layoutcontainer.OneLineListAdapter;
+import com.staschum.html2view.layoutcontainer.TwoLineListAdapter;
+import com.staschum.html2view.objects.FragmentDescriptor;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.select.Elements;
 
 import java.util.List;
 
@@ -36,11 +37,14 @@ public class ListAdapterFactory {
 		public abstract BaseListAdapter getListAdapter(Context context);
 	}
 
-	public static BaseListAdapter createListAdapter(Context context, List<TagNode> tagNodes, JSONArray data) {
+	public static BaseListAdapter createListAdapter(Context context, Elements elements, List<FragmentDescriptor> data) {
 		BaseListAdapter result;
-		JSONObject item = Utils.getDataFromJsonArray(data, 0);
-		result = Adapter.valueOf(Utils.getString(item, "layout_name").toUpperCase()).getListAdapter(context);
-		result.setData(tagNodes, Utils.getJSONArray(item, "data"));
+		if(data.isEmpty()) {
+			return null;
+		}
+		FragmentDescriptor item = data.get(0);
+		result = Adapter.valueOf(item.getLayoutName().toUpperCase()).getListAdapter(context);
+		result.setData(elements, item.getData());
 
 		return result;
 	}

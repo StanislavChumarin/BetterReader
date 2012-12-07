@@ -3,8 +3,11 @@ package com.staschum.html2view.layoutcontainer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.staschum.html2view.H2VObject;
-import org.htmlcleaner.TagNode;
+import com.staschum.html2view.objects.FragmentDescriptor;
 import org.json.JSONArray;
+import org.jsoup.nodes.Document;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,8 +20,8 @@ public abstract class ContentFragment extends Fragment implements H2VObject {
 
 	protected String url;
 	protected static String URL_KEY = "url";
-	protected TagNode tagNode;
-	protected JSONArray fragmentData;
+	protected Document document;
+	protected List<FragmentDescriptor> fragmentData;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -26,8 +29,8 @@ public abstract class ContentFragment extends Fragment implements H2VObject {
 		url = getArguments().getString(URL_KEY, "");
 	}
 
-	public void setData(TagNode tagNode, JSONArray fragmentData) {
-		this.tagNode = tagNode;
+	public void setData(Document doc, List<FragmentDescriptor> fragmentData) {
+		this.document = doc;
 		this.fragmentData = fragmentData;
 	}
 }

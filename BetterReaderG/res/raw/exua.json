@@ -1,13 +1,13 @@
 {
     "filter1": {
         "url": "http://www.ex.ua/",
-        "should_exist": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/a/img",
+        "should_exist": ".include_0>tbody>tr>td>a>img",
         "layout_name": "single_list",
         "data": [
             {
                 "type": "list",
                 "id": "list_content",
-                "parent_xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td",
+                "selector": ".include_0>tbody>tr>td",
                 "data": [
                     {
                         "type": "list_row",
@@ -16,31 +16,32 @@
                             {
                                 "type": "text",
                                 "id": "row_main_text",
-                                "xpath": "/p/a/b"
+                                "selector": "a>b"
                             },
                             {
                                 "type": "text",
                                 "id": "row_small_text",
-                                "xpath": "/p/a[@class='info']"
+                                "selector": ".info"
                             }
                         ]
                     }
                 ],
                 "action": {
-                    "open": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/p/a/@href"
+                    "item": ".include_0>tbody>tr>td>p>a:eq(0):not(.info)",
+                    "attr":"href"
                 }
             }
         ]
     },
     "filter2": {
         "url": "http://www.ex.ua/",
-        "should_exist": ".//*[@id='body_element']//table[@class='include_0']",
+        "should_exist": ".include_0",
         "layout_name": "single_list",
         "data": [
             {
                 "type": "list",
                 "id": "list_content",
-                "parent_xpath": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td",
+                "selector": ".include_0>tbody>tr>td",
                 "data": [
                     {
                         "type": "list_row",
@@ -49,31 +50,32 @@
                             {
                                 "type": "text",
                                 "id": "row_main_text",
-                                "xpath": "/a/b"
+                                "selector": "a>b"
                             },
                             {
                                 "type": "text",
                                 "id": "row_small_text",
-                                "xpath": "/p/a[@class='info']"
+                                "selector": ".info"
                             }
                         ]
                     }
                 ],
                 "action": {
-                    "open": ".//*[@id='body_element']//table[@class='include_0']/tbody//tr//td/a/@href"
+                    "item": ".include_0>tbody>tr>td>a",
+                    "attr":"href"
                 }
             }
         ]
     },
     "filter3": {
         "url": "http://www.ex.ua/",
-        "should_exist": "/body/table/tbody/tr/td/table/tbody/tr/td[1]//a",
+        "should_exist": ".menu_text",
         "layout_name": "single_list",
         "data": [
             {
                 "type": "list",
                 "id": "list_content",
-                "parent_xpath": "/body/table/tbody/tr/td/table/tbody/tr/td[1]",
+                "selector": ".menu_text:eq(0)",
                 "data": [
                     {
                         "type": "list_row",
@@ -82,13 +84,14 @@
                             {
                                 "type": "text",
                                 "id": "text",
-                                "xpath": "//a"
+                                "selector": "a[href!=/]"
                             }
                         ]
                     }
                 ],
                 "action": {
-                    "open": "/body/table/tbody/tr/td/table/tbody/tr/td[1]//a/@href"
+                    "item": ".menu_text:eq(0)>a[href!=/]",
+                    "attr":"href"
                 }
             }
         ]

@@ -1,17 +1,5 @@
 package com.staschum;
 
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.ResultReceiver;
-import android.util.Log;
-import com.staschum.ui.MainActivity;
-import org.apache.http.util.ByteArrayBuffer;
-
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
 /**
  * Created with IntelliJ IDEA.
  * User: stanislavchumarin

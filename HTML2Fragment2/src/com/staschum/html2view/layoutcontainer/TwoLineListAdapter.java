@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.staschum.R;
 import com.staschum.html2view.Utils;
-import org.htmlcleaner.TagNode;
+import com.staschum.html2view.objects.FragmentDescriptor;
 import org.json.JSONArray;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,24 +76,22 @@ public class TwoLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void setData(List<TagNode> tagNodes, JSONArray jsonArray) {
+	public void setData(Elements elements, List<FragmentDescriptor> descriptors) {
 		List<Map<String, String>> result = new ArrayList<Map<String, String>>();
-		String mainTextXPath = Utils.getString(Utils.getDataFromJsonArray(jsonArray, 0), "xpath");
-		String secondaryTextXPath = Utils.getString(Utils.getDataFromJsonArray(jsonArray, 1), "xpath");
-		for (TagNode tagNode : tagNodes) {
-			List<TagNode> nodesByXPath = Utils.getNodesByXPath(tagNode, mainTextXPath, TagNode.class);
-			if(nodesByXPath.isEmpty())
-				continue;
-			String mainText = Utils.readTextFromTag(nodesByXPath.get(0));
+		if(descriptors.size() < 2) {
+			return;
+		}
+		String mainTextSelector = descriptors.get(0).getSelector();
+		String secondaryTextSelector = descriptors.get(1).getSelector();
+		for (Element parentElement : elements) {
+			Elements nodesByXPath = parentElement.select(mainTextSelector);
+			String mainText = nodesByXPath.text();
 			if (mainText.isEmpty())
 				continue;
 			Map<String, String> entry = new HashMap<String, String>();
 			entry.put(mainTextKey, mainText);
-			List<TagNode> nodesByXPath1 = Utils.getNodesByXPath(tagNode, secondaryTextXPath, TagNode.class);
-			String secondaryText = "";
-			if (!nodesByXPath1.isEmpty()) {
-				secondaryText = Utils.readTextFromTag(nodesByXPath1.get(0));
-			}
+			Elements nodesByXPath1 = parentElement.select(secondaryTextSelector);
+			String secondaryText = nodesByXPath1.text();
 
 			entry.put(secondaryTextKey, secondaryText);
 			result.add(entry);

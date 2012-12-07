@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.staschum.R;
 import com.staschum.html2view.Utils;
-import org.htmlcleaner.TagNode;
+import com.staschum.html2view.objects.FragmentDescriptor;
 import org.json.JSONArray;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,17 +68,18 @@ public class OneLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void setData(List<TagNode> tagNodes, JSONArray jsonArray) {
+	public void setData(Elements elements, List<FragmentDescriptor> descriptors) {
 		List<String> result = new ArrayList<String>();
-		String textXPath = Utils.getString(Utils.getDataFromJsonArray(jsonArray, 0), "xpath");
-		List<TagNode> candidates = new ArrayList<TagNode>();
-		for (TagNode parentNode : tagNodes) {
-			for (TagNode tagNode : Utils.getNodesByXPath(parentNode, textXPath, TagNode.class)) {
-				String text = Utils.readTextFromTag(tagNode);
+		if(descriptors.isEmpty()) {
+			return;
+		}
+		String textSelector = descriptors.get(0).getSelector();
+		Elements requiredNodes = elements.select(textSelector);
+		for (Element element : requiredNodes) {
+				String text = element.text();
 				if (text.isEmpty())
 					continue;
 				result.add(text);
-			}
 		}
 		content = result;
 		count = content.size();

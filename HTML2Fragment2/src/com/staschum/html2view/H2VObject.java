@@ -1,7 +1,10 @@
 package com.staschum.html2view;
 
-import org.htmlcleaner.TagNode;
+import com.staschum.html2view.objects.FragmentDescriptor;
 import org.json.JSONArray;
+import org.jsoup.nodes.Document;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,5 +14,5 @@ import org.json.JSONArray;
  * To change this template use File | Settings | File Templates.
  */
 public interface H2VObject {
-	void setData(TagNode tagNode, JSONArray jsonArray);
+	void setData(Document document, List<FragmentDescriptor> descriptors);
 }

@@ -1,6 +1,5 @@
 package com.staschum.ui;
 
-import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import com.actionbarsherlock.app.SherlockFragment;
@@ -38,13 +37,13 @@ public class BaseActivity extends SlidingFragmentActivity {
 		slidingMenu.setFadeDegree(0.35f);
 		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
-		slidingMenu.setBehindScrollScale(0.0f);
-		slidingMenu.setBehindCanvasTransformer(new SlidingMenu.CanvasTransformer() {
-			@Override
-			public void transformCanvas(Canvas canvas, float percentOpen) {
-				canvas.scale(percentOpen, 1, 0, 0);
-			}
-		});
+//		slidingMenu.setBehindScrollScale(0.0f);
+//		slidingMenu.setBehindCanvasTransformer(new SlidingMenu.CanvasTransformer() {
+//			@Override
+//			public void transformCanvas(Canvas canvas, float percentOpen) {
+//				canvas.scale(percentOpen, 1, 0, 0);
+//			}
+//		});
 
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
