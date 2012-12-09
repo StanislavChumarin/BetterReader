@@ -1,104 +1,206 @@
-{
-    "filter1": {
-        "url": "http://www.ex.ua/",
-        "should_exist": ".include_0>tbody>tr>td>a>img",
-        "layout_name": "single_list",
-        "data": [
+{  "filter1" :
+         {
+            "url" : "http://www.ex.ua/",
+            "should_exist" : ".list",
+            "layout_name" : "single_list",
+            "data" :
+               [
+                  {
+                     "type" : "list",
+                     "id" : "list_content",
+                     "selector" : ".list tr:not(:eq(1))",
+                     "data" :
+                        [
+                           {
+                              "type" : "list_row",
+                              "layout_name" : "image_w_two_lines_list_row",
+                              "data" :
+                                 [
+                                    {
+                                       "type" : "image",
+                                       "id" : "row_image",
+                                       "selector" : "a>img"
+                                    },
+                                    {
+                                       "type" : "text",
+                                       "id" : "row_main_text",
+                                       "selector" : "td:eq(1)>a"
+                                    },
+                                    {
+                                       "type" : "text",
+                                       "id" : "row_small_text",
+                                       "selector" : ".small b"
+                                    }
+                                 ]
+                           }
+                        ],
+                     "action" :
+                        {
+                           "item" : ".small :eq(0) a",
+                           "attr" : "href"
+                        }
+                  }
+               ]
+         },
+   "filter2" :
+      {
+         "url" : "http://www.ex.ua/",
+         "should_exist" : ".include_0>tbody>tr>td>a>img",
+         "layout_name" : "single_list",
+         "data" :
+            [
+               {
+                  "type" : "list",
+                  "id" : "list_content",
+                  "selector" : ".include_0>tbody>tr>td",
+                  "data" :
+                     [
+                        {
+                           "type" : "list_row",
+                           "layout_name" : "image_w_two_lines_list_row",
+                           "data" :
+                              [
+                                 {
+                                    "type" : "image",
+                                    "id" : "row_image",
+                                    "selector" : "a>img"
+                                 },
+                                 {
+                                    "type" : "text",
+                                    "id" : "row_main_text",
+                                    "selector" : "a>b"
+                                 },
+                                 {
+                                    "type" : "text",
+                                    "id" : "row_small_text",
+                                    "selector" : ".info"
+                                 }
+                              ]
+                        }
+                     ],
+                  "action" :
+                     {
+                        "item" : ".include_0>tbody>tr>td>p>a:eq(0):not(.info)",
+                        "attr" : "href"
+                     }
+               }
+            ]
+      },
+      "filter3" :
             {
-                "type": "list",
-                "id": "list_content",
-                "selector": ".include_0>tbody>tr>td",
-                "data": [
-                    {
-                        "type": "list_row",
-                        "layout_name": "image_w_two_lines_list_row",
-                        "data": [
-                            {
-                                "type":"image",
-                                "id":"row_image",
-                                "selector":"a>img"
-                            },
-                            {
-                                "type": "text",
-                                "id": "row_main_text",
-                                "selector": "a>b"
-                            },
-                            {
-                                "type": "text",
-                                "id": "row_small_text",
-                                "selector": ".info"
-                            }
-                        ]
-                    }
-                ],
-                "action": {
-                    "item": ".include_0>tbody>tr>td>p>a:eq(0):not(.info)",
-                    "attr":"href"
-                }
-            }
-        ]
-    },
-    "filter2": {
-        "url": "http://www.ex.ua/",
-        "should_exist": ".include_0",
-        "layout_name": "single_list",
-        "data": [
-            {
-                "type": "list",
-                "id": "list_content",
-                "selector": ".include_0>tbody>tr>td",
-                "data": [
-                    {
-                        "type": "list_row",
-                        "layout_name": "two_lines_list_row",
-                        "data": [
-                            {
-                                "type": "text",
-                                "id": "row_main_text",
-                                "selector": "a>b"
-                            },
-                            {
-                                "type": "text",
-                                "id": "row_small_text",
-                                "selector": ".info"
-                            }
-                        ]
-                    }
-                ],
-                "action": {
-                    "item": ".include_0>tbody>tr>td>a",
-                    "attr":"href"
-                }
-            }
-        ]
-    },
-    "filter3": {
-        "url": "http://www.ex.ua/",
-        "should_exist": ".menu_text",
-        "layout_name": "single_list",
-        "data": [
-            {
-                "type": "list",
-                "id": "list_content",
-                "selector": ".menu_text:eq(0)",
-                "data": [
-                    {
-                        "type": "list_row",
-                        "layout_name": "one_line_list_row",
-                        "data": [
-                            {
-                                "type": "text",
-                                "id": "text",
-                                "selector": "a[href!=/]"
-                            }
-                        ]
-                    }
-                ],
-                "action": {
-                    "item": ".menu_text:eq(0)>a[href!=/]",
-                    "attr":"href"
-                }
-            }
-        ]
-    }
+               "url" : "http://www.ex.ua/",
+               "should_exist" : ".include_1 img",
+               "layout_name" : "single_list",
+               "data" :
+                  [
+                     {
+                        "type" : "list",
+                        "id" : "list_content",
+                        "selector" : ".include_1 td",
+                        "data" :
+                           [
+                              {
+                                 "type" : "list_row",
+                                 "layout_name" : "image_w_two_lines_list_row",
+                                 "data" :
+                                    [
+                                       {
+                                          "type" : "image",
+                                          "id" : "row_image",
+                                          "selector" : "img"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_main_text",
+                                          "selector" : "a b"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_small_text",
+                                          "selector" : ".info"
+                                       }
+                                    ]
+                              }
+                           ],
+                        "action" :
+                           {
+                              "item" : ".include_1 td a:has(b)",
+                              "attr" : "href"
+                           }
+                     }
+                  ]
+            },
+   "filter4" :
+      {
+         "url" : "http://www.ex.ua/",
+         "should_exist" : ".include_0",
+         "layout_name" : "single_list",
+         "data" :
+            [
+               {
+                  "type" : "list",
+                  "id" : "list_content",
+                  "selector" : ".include_0>tbody>tr>td",
+                  "data" :
+                     [
+                        {
+                           "type" : "list_row",
+                           "layout_name" : "two_lines_list_row",
+                           "data" :
+                              [
+                                 {
+                                    "type" : "text",
+                                    "id" : "row_main_text",
+                                    "selector" : "a>b"
+                                 },
+                                 {
+                                    "type" : "text",
+                                    "id" : "row_small_text",
+                                    "selector" : ".info"
+                                 }
+                              ]
+                        }
+                     ],
+                  "action" :
+                     {
+                        "item" : ".include_0>tbody>tr>td>a",
+                        "attr" : "href"
+                     }
+               }
+            ]
+      },
+   "filter5" :
+      {
+         "url" : "http://www.ex.ua/",
+         "should_exist" : ".menu_text",
+         "layout_name" : "single_list",
+         "data" :
+            [
+               {
+                  "type" : "list",
+                  "id" : "list_content",
+                  "selector" : ".menu_text:eq(0)",
+                  "data" :
+                     [
+                        {
+                           "type" : "list_row",
+                           "layout_name" : "one_line_list_row",
+                           "data" :
+                              [
+                                 {
+                                    "type" : "text",
+                                    "id" : "text",
+                                    "selector" : "a[href!=/]"
+                                 }
+                              ]
+                        }
+                     ],
+                  "action" :
+                     {
+                        "item" : ".menu_text:eq(0)>a[href!=/]",
+                        "attr" : "href"
+                     }
+               }
+            ]
+      }
 }
