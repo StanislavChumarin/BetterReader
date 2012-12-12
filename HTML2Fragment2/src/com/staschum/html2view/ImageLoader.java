@@ -34,7 +34,6 @@ public class ImageLoader {
 		executorService=Executors.newFixedThreadPool(5);
 	}
 
-	final int stub_id= R.drawable.stub;
 	public void DisplayImage(String url, ImageView imageView)
 	{
 		imageViews.put(imageView, url);
@@ -44,7 +43,6 @@ public class ImageLoader {
 		else
 		{
 			queuePhoto(url, imageView);
-			imageView.setImageResource(stub_id);
 		}
 	}
 
@@ -175,8 +173,6 @@ public class ImageLoader {
 				return;
 			if(bitmap!=null)
 				photoToLoad.imageView.setImageBitmap(bitmap);
-			else
-				photoToLoad.imageView.setImageResource(stub_id);
 		}
 	}
 

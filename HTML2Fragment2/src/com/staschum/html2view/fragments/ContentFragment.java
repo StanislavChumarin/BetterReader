@@ -1,4 +1,4 @@
-package com.staschum.html2view.layoutcontainer;
+package com.staschum.html2view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +14,6 @@ import java.util.List;
  * User: schumarin
  * Date: 05.12.12
  * Time: 13:03
- * To change this template use File | Settings | File Templates.
  */
 public abstract class ContentFragment extends Fragment implements H2VObject {
 

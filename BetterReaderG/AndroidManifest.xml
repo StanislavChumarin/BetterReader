@@ -3,7 +3,7 @@
           package="com.staschum"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16"/>
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16"/>
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
                  android:theme="@style/Sherlock.__Theme.Light">
         <activity android:name=".ui.MainActivity"

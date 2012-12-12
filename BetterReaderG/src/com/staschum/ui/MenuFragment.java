@@ -55,37 +55,6 @@ public class MenuFragment extends SherlockFragment {
 			}
 		});
 
-//		Utils.getHtmlByUrlAsync(url + "/", new ResultReceiver(new Handler()) {
-//			@Override
-//			protected void onReceiveResult(int resultCode, Bundle resultData) {
-//				if (resultCode != Utils.STATUS_OK)
-//					return;
-//				HtmlCleaner htmlCleaner = new HtmlCleaner();
-//				// take default cleaner properties
-//				CleanerProperties props = htmlCleaner.getProperties();
-//
-//				TagNode tagNode = htmlCleaner.clean(resultData.getString(Utils.RESULT_KEY, ""));
-//				try {
-//					Object[] menus = tagNode.evaluateXPath("/body/table/tbody/tr/td/table/tbody/tr/td[1]//a");
-//					final List<String> urls = new ArrayList<String>();
-//					for (int i = 0; i < menus.length; i++) {
-//						TagNode menu = (TagNode) menus[i];
-//						menuNames.add(Utils.removeTags(htmlCleaner.getInnerHtml(menu)));
-//						urls.add(url + menu.getAttributeByName("href"));
-//					}
-//
-//					arrayAdapter.addAll(menuNames);
-//
-//				} catch (XPatherException e) {
-//					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//				}
-////				TagNode menuRow = tagNode.getElementsByAttValue("class", "menu_text", true, false)[0];
-////				TagNode[] menus = menuRow.getElementsByName("a", false);
-//
-//			}
-//		});
-
-
 	}
 
 	private List<String> getNames(List<SupportedSite> supportedSites) {

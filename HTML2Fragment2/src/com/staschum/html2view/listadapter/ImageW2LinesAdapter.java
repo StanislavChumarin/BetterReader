@@ -1,4 +1,4 @@
-package com.staschum.html2view.layoutcontainer;
+package com.staschum.html2view.listadapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -67,12 +67,12 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 		mainText.setText(rowContent.getMaintext());
 		secondaryText.setText(rowContent.getSecondaryText());
 
-		imageLoader.DisplayImage(rowContent.getImageUrl(), image);
+		imageLoader.DisplayImage(rowContent.getImageUrl(), image, false);
 		return vi;
 	}
 
 	@Override
-	public void setData(Elements elements, List<FragmentDescriptor> descriptors) {
+	public void addData(Elements elements, List<FragmentDescriptor> descriptors) {
 		if (descriptors.size() < 3)
 			return;
 

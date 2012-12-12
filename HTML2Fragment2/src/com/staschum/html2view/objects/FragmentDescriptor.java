@@ -13,7 +13,6 @@ import java.util.List;
  * User: schumarin
  * Date: 05.12.12
  * Time: 18:32
- * To change this template use File | Settings | File Templates.
  */
 public class FragmentDescriptor {
 	public DataType type;
@@ -32,7 +31,7 @@ public class FragmentDescriptor {
 		try {
 			JSONArray array = fragmentDescriptorSrc.getJSONArray("data");
 			for(int i = 0; i < array.length(); i++) {
-				result.add(new FragmentDescriptor(array.getJSONObject(i)));
+				result.add(getFragmentDescriptor(array.getJSONObject(i)));
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -53,8 +52,6 @@ public class FragmentDescriptor {
 		return getString(fragmentDescriptorSrc, "selector");
 	}
 
-
-
 	private static String getString(JSONObject data, String key) {
 		try {
 			return data.getString(key);
@@ -74,14 +71,23 @@ public class FragmentDescriptor {
 	}
 
 	public FragmentDescriptor getAction() {
-		return new FragmentDescriptor(getJSONObject(fragmentDescriptorSrc, "action"));
+		return getFragmentDescriptor(getJSONObject(fragmentDescriptorSrc, "click"));
 	}
 
 	public String getItemSelector() {
-		return getString(fragmentDescriptorSrc, "item");
+		return getString(fragmentDescriptorSrc, "selector");
 	}
 
 	public String getAttr() {
 		return getString(fragmentDescriptorSrc, "attr");
+	}
+
+	public FragmentDescriptor getPager() {
+		JSONObject pager = getJSONObject(fragmentDescriptorSrc, "pager");
+		return getFragmentDescriptor(pager);
+	}
+
+	private static FragmentDescriptor getFragmentDescriptor(JSONObject jsonObject) {
+		return jsonObject == null ? null : new FragmentDescriptor(jsonObject);
 	}
 }

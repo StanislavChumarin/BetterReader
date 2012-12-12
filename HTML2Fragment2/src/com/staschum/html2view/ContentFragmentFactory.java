@@ -1,6 +1,8 @@
 package com.staschum.html2view;
 
-import com.staschum.html2view.layoutcontainer.ContentFragment;
+import com.staschum.html2view.fragments.DescriptionWithImageAndFileList;
+import com.staschum.html2view.fragments.SingleListFragment;
+import com.staschum.html2view.fragments.ContentFragment;
 import com.staschum.html2view.objects.Layouts;
 
 /**
@@ -8,7 +10,6 @@ import com.staschum.html2view.objects.Layouts;
  * User: schumarin
  * Date: 05.12.12
  * Time: 13:00
- * To change this template use File | Settings | File Templates.
  */
 public class ContentFragmentFactory {
 
@@ -18,6 +19,9 @@ public class ContentFragmentFactory {
 		switch (layout) {
 			case SINGLE_LIST:
 				result = SingleListFragment.createFragment(baseUrl);
+				break;
+			case DESCRIPTION_WITH_IMAGE_AND_FILE_LIST:
+				result = DescriptionWithImageAndFileList.createFragment(baseUrl);
 				break;
 		}
 		return result;

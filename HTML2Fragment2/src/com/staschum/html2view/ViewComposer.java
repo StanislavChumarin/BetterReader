@@ -4,10 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-import com.staschum.html2view.layoutcontainer.ContentFragment;
+import com.staschum.html2view.fragments.ContentFragment;
 import com.staschum.html2view.managers.DescriptionManager;
 import com.staschum.html2view.objects.FragmentDescriptor;
-import org.json.JSONArray;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -18,7 +17,6 @@ import java.util.List;
  * User: schumarin
  * Date: 04.12.12
  * Time: 17:40
- * To change this template use File | Settings | File Templates.
  */
 public class ViewComposer {
 

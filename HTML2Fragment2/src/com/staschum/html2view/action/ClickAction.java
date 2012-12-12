@@ -1,4 +1,4 @@
-package com.staschum.html2view.objects;
+package com.staschum.html2view.action;
 
 /**
  * Created with IntelliJ IDEA.

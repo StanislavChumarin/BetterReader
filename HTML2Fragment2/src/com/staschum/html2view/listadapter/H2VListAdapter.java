@@ -1,4 +1,4 @@
-package com.staschum.html2view;
+package com.staschum.html2view.listadapter;
 
 import com.staschum.html2view.objects.FragmentDescriptor;
 import org.json.JSONArray;
@@ -11,9 +11,8 @@ import java.util.List;
  * User: schumarin
  * Date: 06.12.12
  * Time: 15:23
- * To change this template use File | Settings | File Templates.
  */
 public interface H2VListAdapter {
-	void setData(Elements elements, List<FragmentDescriptor> jsonArray);
+	void addData(Elements elements, List<FragmentDescriptor> descriptors);
 
 }

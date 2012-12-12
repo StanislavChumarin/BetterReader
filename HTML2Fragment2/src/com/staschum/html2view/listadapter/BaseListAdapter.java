@@ -1,15 +1,13 @@
-package com.staschum.html2view.layoutcontainer;
+package com.staschum.html2view.listadapter;
 
 import android.content.Context;
 import android.widget.BaseAdapter;
-import com.staschum.html2view.H2VListAdapter;
 
 /**
  * Created with IntelliJ IDEA.
  * User: schumarin
  * Date: 06.12.12
  * Time: 14:46
- * To change this template use File | Settings | File Templates.
  */
 public abstract class BaseListAdapter extends BaseAdapter implements H2VListAdapter {
 

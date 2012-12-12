@@ -1,4 +1,4 @@
-package com.staschum.html2view.layoutcontainer;
+package com.staschum.html2view.listadapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,9 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.staschum.R;
-import com.staschum.html2view.Utils;
 import com.staschum.html2view.objects.FragmentDescriptor;
-import org.json.JSONArray;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -76,7 +74,7 @@ public class TwoLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void setData(Elements elements, List<FragmentDescriptor> descriptors) {
+	public void addData(Elements elements, List<FragmentDescriptor> descriptors) {
 		if(descriptors.size() < 2) {
 			return;
 		}
@@ -94,6 +92,7 @@ public class TwoLineListAdapter extends BaseListAdapter {
 			content.add(entry);
 		}
 		count = content.size();
+		notifyDataSetChanged();
 	}
 
 
