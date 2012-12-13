@@ -21,7 +21,7 @@
                {
                   "type" : "text",
                   "id" : "description_text",
-                  "selector" : "#body_element td:eq(0) p",
+                  "selector" : "#body_element td:eq(0) p:not(:has(a))",
                   "attr" : "text"
                },
                {
@@ -55,13 +55,7 @@
                                  }
                               ]
                         }
-                     ],
-                  "click" :
-                     {
-                        "action" : "download",
-                        "selector" : ".small :eq(0) a",
-                        "attr" : "href"
-                     }
+                     ]
                }
             ]
       },

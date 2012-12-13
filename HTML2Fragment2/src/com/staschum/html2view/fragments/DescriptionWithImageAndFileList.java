@@ -3,11 +3,13 @@ package com.staschum.html2view.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewer;
 import com.staschum.html2view.ImageLoader;
@@ -25,7 +27,7 @@ import java.util.List;
  * Date: 10.12.12
  * Time: 11:22
  */
-public class DescriptionWithImageAndFileList extends ContentFragment{
+public class DescriptionWithImageAndFileList extends ContentFragment {
 
 	public static ContentFragment createFragment(String url) {
 		ContentFragment fragment = new DescriptionWithImageAndFileList();
@@ -50,7 +52,7 @@ public class DescriptionWithImageAndFileList extends ContentFragment{
 
 		activity.setTitle(document.select("title").text());
 
-		if(fragmentData.size() < 4)
+		if (fragmentData.size() < 4)
 			return;
 
 		FragmentDescriptor data = fragmentData.get(0);
@@ -60,7 +62,7 @@ public class DescriptionWithImageAndFileList extends ContentFragment{
 
 		data = fragmentData.get(1);
 		ImageView bigImage = (ImageView) header_description.findViewById(R.id.big_image);
-		imageLoader.DisplayImage(document.select(data.getSelector()).attr("src"), bigImage, true);
+		imageLoader.DisplayImage(document.select(data.getSelector()).attr("src"), bigImage);
 		bigImage.setVisibility(View.VISIBLE);
 
 		data = fragmentData.get(2);
@@ -78,13 +80,15 @@ public class DescriptionWithImageAndFileList extends ContentFragment{
 		listView.setAdapter(listAdapter);
 
 		FragmentDescriptor action = data.getAction();
-		final List<String> actions = Utils.getValues(document.select(action.getItemSelector()), action.getAttr());
+		if (action != null) {
+			final List<String> actions = Utils.getValues(document.select(action.getItemSelector()), action.getAttr());
 
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				((ContentViewer) activity).viewContent(url, actions.get(i - listView.getHeaderViewsCount()));
-			}
-		});
+			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+					((ContentViewer) activity).viewContent(url, actions.get(i - listView.getHeaderViewsCount()));
+				}
+			});
+		}
 	}
 }

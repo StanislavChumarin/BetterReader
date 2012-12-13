@@ -67,7 +67,7 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 		mainText.setText(rowContent.getMaintext());
 		secondaryText.setText(rowContent.getSecondaryText());
 
-		imageLoader.DisplayImage(rowContent.getImageUrl(), image, false);
+		imageLoader.DisplayImage(rowContent.getImageUrl(), image);
 		return vi;
 	}
 
