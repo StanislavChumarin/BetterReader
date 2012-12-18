@@ -146,7 +146,7 @@ public class SingleListFragment extends ContentFragment {
 				return;
 			}
 
-			String htmlSource = resultData.getString(Utils.RESULT_KEY, "");
+			String htmlSource = resultData.getString(Utils.RESULT_KEY);
 
 			Document doc = Jsoup.parse(htmlSource, url);
 

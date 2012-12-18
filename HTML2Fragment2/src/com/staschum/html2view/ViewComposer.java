@@ -39,7 +39,7 @@ public class ViewComposer {
 					return;
 				}
 
-				String htmlSource = resultData.getString(Utils.RESULT_KEY, "");
+				String htmlSource = resultData.getString(Utils.RESULT_KEY);
 
 				Document doc = Jsoup.parse(htmlSource, baseUrl);
 //				Elements menuLinks = doc.select(".menu_text:eq(0)>a[href!=/]");

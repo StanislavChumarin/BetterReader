@@ -25,7 +25,7 @@ public abstract class ContentFragment extends Fragment implements H2VObject {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		url = getArguments().getString(URL_KEY, "");
+		url = getArguments().getString(URL_KEY);
 	}
 
 	public void setData(Document doc, List<FragmentDescriptor> fragmentData) {

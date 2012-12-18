@@ -67,7 +67,7 @@ public class DescriptionWithImageAndFileList extends ContentFragment {
 
 		data = fragmentData.get(2);
 		TextView descriptionText = (TextView) header_description.findViewById(R.id.description_text);
-		descriptionText.setText(Html.fromHtml(document.select(data.getSelector()).html()));
+		descriptionText.setText(Html.fromHtml(document.select(data.getSelector()).outerHtml().replace("<a", "<b").replace("</a", "</b")));
 		descriptionText.setVisibility(View.VISIBLE);
 
 		data = fragmentData.get(3);

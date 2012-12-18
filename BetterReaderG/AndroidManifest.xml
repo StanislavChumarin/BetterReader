@@ -3,9 +3,13 @@
           package="com.staschum"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="16"/>
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="15"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher"
-                 android:theme="@style/Sherlock.__Theme.Light">
+                 android:theme="@style/Theme.Sherlock.Light.DarkActionBar">
         <activity android:name=".ui.MainActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait">
@@ -15,6 +19,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 </manifest>

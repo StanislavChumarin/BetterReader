@@ -1,5 +1,7 @@
 package com.staschum.model;
 
+import org.json.JSONObject;
+
 /**
  * Created with IntelliJ IDEA.
  * User: schumarin
@@ -11,8 +13,9 @@ package com.staschum.model;
 public class SupportedSite {
 	private String name;
 	private String url;
+	private JSONObject json;
 
-	public SupportedSite(String name, String url) {
+	public SupportedSite(String name, String url, JSONObject jsonObject) {
 		this.name = name;
 		this.url = url;
 	}
@@ -23,5 +26,9 @@ public class SupportedSite {
 
 	public String getUrl() {
 		return url;
+	}
+
+	public JSONObject getJsonFilters() {
+		return json;
 	}
 }

@@ -3,55 +3,61 @@
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".list",
-         "layout_name" : "description_with_image_and_file_list",
-         "data" :
+         "screens" :
             [
                {
-                  "type" : "text",
-                  "id" : "title_text",
-                  "selector" : "td>h1",
-                  "attr" : "text"
-               },
-               {
-                  "type" : "image",
-                  "id" : "big_image",
-                  "selector" : "#body_element tr:eq(0) img",
-                  "attr" : "src"
-               },
-               {
-                  "type" : "text",
-                  "id" : "description_text",
-                  "selector" : "#body_element td:eq(0) p:not(:has(a))",
-                  "attr" : "text"
-               },
-               {
-                  "type" : "list",
-                  "id" : "list_content",
-                  "selector" : ".list tr:not(:eq(0))",
+                  "layout_name" : "description_with_image_and_file_list",
+                  "title_selector" : "title",
                   "data" :
                      [
                         {
-                           "type" : "list_row",
-                           "layout_name" : "image_w_two_lines_list_row",
+                           "type" : "text",
+                           "id" : "title_text",
+                           "selector" : "td>h1",
+                           "attr" : "text"
+                        },
+                        {
+                           "type" : "image",
+                           "id" : "big_image",
+                           "selector" : "#body_element tr:eq(0) img",
+                           "attr" : "src"
+                        },
+                        {
+                           "type" : "text",
+                           "id" : "description_text",
+                           "selector" : "#body_element td:eq(0) p:not(:has(.r_button))",
+                           "attr" : "text"
+                        },
+                        {
+                           "type" : "list",
+                           "id" : "list_content",
+                           "selector" : ".list tr:not(:eq(0))",
                            "data" :
                               [
                                  {
-                                    "type" : "image",
-                                    "id" : "row_image",
-                                    "selector" : "a>img",
-                                    "attr" : "src"
-                                 },
-                                 {
-                                    "type" : "text",
-                                    "id" : "row_main_text",
-                                    "selector" : "td:eq(1)>a",
-                                    "attr" : "text"
-                                 },
-                                 {
-                                    "type" : "text",
-                                    "id" : "row_small_text",
-                                    "selector" : ".small b",
-                                    "attr" : "text"
+                                    "type" : "list_row",
+                                    "layout_name" : "image_w_two_lines_list_row",
+                                    "data" :
+                                       [
+                                          {
+                                             "type" : "image",
+                                             "id" : "row_image",
+                                             "selector" : "a>img",
+                                             "attr" : "src"
+                                          },
+                                          {
+                                             "type" : "text",
+                                             "id" : "row_main_text",
+                                             "selector" : "td:eq(1)>a",
+                                             "attr" : "text"
+                                          },
+                                          {
+                                             "type" : "text",
+                                             "id" : "row_small_text",
+                                             "selector" : ".small b",
+                                             "attr" : "text"
+                                          }
+                                       ]
                                  }
                               ]
                         }
@@ -63,52 +69,58 @@
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".include_0>tbody>tr>td>a>img",
-         "layout_name" : "single_list",
-         "data" :
+         "screens" :
             [
                {
-                  "type" : "list",
-                  "id" : "list_content",
-                  "selector" : ".include_0>tbody>tr>td",
+                  "layout_name" : "single_list",
+                  "title_selector" : "title",
                   "data" :
                      [
                         {
-                           "type" : "list_row",
-                           "layout_name" : "image_w_two_lines_list_row",
+                           "type" : "list",
+                           "id" : "list_content",
+                           "selector" : ".include_0>tbody>tr>td",
                            "data" :
                               [
                                  {
-                                    "type" : "image",
-                                    "id" : "row_image",
-                                    "selector" : "a>img",
-                                    "attr" : "src"
-                                 },
-                                 {
-                                    "type" : "text",
-                                    "id" : "row_main_text",
-                                    "selector" : "a>b",
-                                    "attr" : "text"
-                                 },
-                                 {
-                                    "type" : "text",
-                                    "id" : "row_small_text",
-                                    "selector" : ".info",
-                                    "attr" : "text"
+                                    "type" : "list_row",
+                                    "layout_name" : "image_w_two_lines_list_row",
+                                    "data" :
+                                       [
+                                          {
+                                             "type" : "image",
+                                             "id" : "row_image",
+                                             "selector" : "a>img",
+                                             "attr" : "src"
+                                          },
+                                          {
+                                             "type" : "text",
+                                             "id" : "row_main_text",
+                                             "selector" : "a>b",
+                                             "attr" : "text"
+                                          },
+                                          {
+                                             "type" : "text",
+                                             "id" : "row_small_text",
+                                             "selector" : ".info",
+                                             "attr" : "text"
+                                          }
+                                       ]
                                  }
-                              ]
+                              ],
+                           "click" :
+                              {
+                                 "action" : "open",
+                                 "selector" : ".include_0>tbody>tr>td>p>a:eq(0):not(.info)",
+                                 "attr" : "href"
+                              },
+                           "pager" :
+                              {
+                                 "selector" : ".include_0 ~ table td:has(img[src*=arr_r]) a",
+                                 "attr" : "href"
+                              }
                         }
-                     ],
-                  "click" :
-                     {
-                        "action" : "open",
-                        "selector" : ".include_0>tbody>tr>td>p>a:eq(0):not(.info)",
-                        "attr" : "href"
-                     },
-                  "pager" :
-                     {
-                        "selector" : ".include_0 ~ table td:has(img[src*=arr_r]) a",
-                        "attr" : "href"
-                     }
+                     ]
                }
             ]
       },
@@ -116,52 +128,58 @@
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".include_1 img",
-         "layout_name" : "single_list",
-         "data" :
+         "screens" :
             [
                {
-                  "type" : "list",
-                  "id" : "list_content",
-                  "selector" : ".include_1 td",
+                  "layout_name" : "single_list",
+                  "title_selector" : "title",
                   "data" :
                      [
                         {
-                           "type" : "list_row",
-                           "layout_name" : "image_w_two_lines_list_row",
+                           "type" : "list",
+                           "id" : "list_content",
+                           "selector" : ".include_1 td",
                            "data" :
                               [
                                  {
-                                    "type" : "image",
-                                    "id" : "row_image",
-                                    "selector" : "img",
-                                    "attr" : "src"
-                                 },
-                                 {
-                                    "type" : "text",
-                                    "id" : "row_main_text",
-                                    "selector" : "a b",
-                                    "attr" : "text"
-                                 },
-                                 {
-                                    "type" : "text",
-                                    "id" : "row_small_text",
-                                    "selector" : ".info",
-                                    "attr" : "text"
+                                    "type" : "list_row",
+                                    "layout_name" : "image_w_two_lines_list_row",
+                                    "data" :
+                                       [
+                                          {
+                                             "type" : "image",
+                                             "id" : "row_image",
+                                             "selector" : "img",
+                                             "attr" : "src"
+                                          },
+                                          {
+                                             "type" : "text",
+                                             "id" : "row_main_text",
+                                             "selector" : "a b",
+                                             "attr" : "text"
+                                          },
+                                          {
+                                             "type" : "text",
+                                             "id" : "row_small_text",
+                                             "selector" : ".info",
+                                             "attr" : "text"
+                                          }
+                                       ]
                                  }
-                              ]
+                              ],
+                           "click" :
+                              {
+                                 "action" : "open",
+                                 "selector" : ".include_1 td a:has(b)",
+                                 "attr" : "href"
+                              },
+                           "pager" :
+                              {
+                                 "selector" : ".include_1 ~ table td:has(img[src*=arr_r]) a",
+                                 "attr" : "href"
+                              }
                         }
-                     ],
-                  "click" :
-                     {
-                        "action" : "open",
-                        "selector" : ".include_1 td a:has(b)",
-                        "attr" : "href"
-                     },
-                  "pager" :
-                     {
-                        "selector" : ".include_1 ~ table td:has(img[src*=arr_r]) a",
-                        "attr" : "href"
-                     }
+                     ]
                }
             ]
       },
@@ -169,41 +187,47 @@
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".include_0",
-         "layout_name" : "single_list",
-         "data" :
+         "screens" :
             [
                {
-                  "type" : "list",
-                  "id" : "list_content",
-                  "selector" : ".include_0>tbody>tr>td",
+                  "layout_name" : "single_list",
+                  "title_selector" : "title",
                   "data" :
                      [
                         {
-                           "type" : "list_row",
-                           "layout_name" : "two_lines_list_row",
+                           "type" : "list",
+                           "id" : "list_content",
+                           "selector" : ".include_0>tbody>tr>td",
                            "data" :
                               [
                                  {
-                                    "type" : "text",
-                                    "id" : "row_main_text",
-                                    "selector" : "a>b",
-                                    "attr" : "text"
-                                 },
-                                 {
-                                    "type" : "text",
-                                    "id" : "row_small_text",
-                                    "selector" : ".info",
-                                    "attr" : "text"
+                                    "type" : "list_row",
+                                    "layout_name" : "two_lines_list_row",
+                                    "data" :
+                                       [
+                                          {
+                                             "type" : "text",
+                                             "id" : "row_main_text",
+                                             "selector" : "a>b",
+                                             "attr" : "text"
+                                          },
+                                          {
+                                             "type" : "text",
+                                             "id" : "row_small_text",
+                                             "selector" : ".info",
+                                             "attr" : "text"
+                                          }
+                                       ]
                                  }
-                              ]
+                              ],
+                           "click" :
+                              {
+                                 "action" : "open",
+                                 "selector" : ".include_0>tbody>tr>td>a",
+                                 "attr" : "href"
+                              }
                         }
-                     ],
-                  "click" :
-                     {
-                        "action" : "open",
-                        "selector" : ".include_0>tbody>tr>td>a",
-                        "attr" : "href"
-                     }
+                     ]
                }
             ]
       },
@@ -211,35 +235,41 @@
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".menu_text",
-         "layout_name" : "single_list",
-         "data" :
+         "screens" :
             [
                {
-                  "type" : "list",
-                  "id" : "list_content",
-                  "selector" : ".menu_text:eq(0)",
+                  "layout_name" : "single_list",
+                  "title_selector" : "title",
                   "data" :
                      [
                         {
-                           "type" : "list_row",
-                           "layout_name" : "one_line_list_row",
+                           "type" : "list",
+                           "id" : "list_content",
+                           "selector" : ".menu_text:eq(0)",
                            "data" :
                               [
                                  {
-                                    "type" : "text",
-                                    "id" : "text",
-                                    "selector" : "a[href!=/]",
-                                    "attr" : "text"
+                                    "type" : "list_row",
+                                    "layout_name" : "one_line_list_row",
+                                    "data" :
+                                       [
+                                          {
+                                             "type" : "text",
+                                             "id" : "text",
+                                             "selector" : "a[href!=/]",
+                                             "attr" : "text"
+                                          }
+                                       ]
                                  }
-                              ]
+                              ],
+                           "click" :
+                              {
+                                 "action" : "open",
+                                 "selector" : ".menu_text:eq(0)>a[href!=/]",
+                                 "attr" : "href"
+                              }
                         }
-                     ],
-                  "click" :
-                     {
-                        "action" : "open",
-                        "selector" : ".menu_text:eq(0)>a[href!=/]",
-                        "attr" : "href"
-                     }
+                     ]
                }
             ]
       }
