@@ -1,4 +1,4 @@
-package com.staschum.html2view.objects;
+package objects;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,17 +15,22 @@ public class H2Adapter {
 	public final String type;
 	public final String adapterName;
 
-	private List<H2View<H2Attribute>> views;
+	private List<H2View> views;
 
-	public H2Adapter(String type, String adapterName, List<H2View<H2Attribute>> views) {
+	public H2Adapter(String type, String adapterName, List<H2View> views) {
 		this.type = type;
 		this.adapterName = adapterName;
 		this.views = views;
 	}
 
-	public List<H2View<H2Attribute>> getViews() {
-		List<H2View<H2Attribute>> result = new ArrayList<H2View<H2Attribute>>();
+	public List<H2View> getViews() {
+		List<H2View> result = new ArrayList<H2View>();
 		Collections.copy(result, views);
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "\n	H2Adapter: [" + type + ", " + adapterName + ", " +views + "]";
 	}
 }

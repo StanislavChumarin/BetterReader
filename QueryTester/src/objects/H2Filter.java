@@ -1,4 +1,4 @@
-package com.staschum.html2view.objects;
+package objects;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,4 +27,8 @@ public class H2Filter {
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return "\nH2Filter: [" + url + ", " + shouldExistSelector + ", " + screens + "]\n";
+	}
 }

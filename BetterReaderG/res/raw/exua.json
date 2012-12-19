@@ -33,33 +33,31 @@
                            "id" : "list_content",
                            "selector" : ".list tr:not(:eq(0))",
                            "data" :
-                              [
-                                 {
-                                    "type" : "list_row",
-                                    "layout_name" : "image_w_two_lines_list_row",
-                                    "data" :
-                                       [
-                                          {
-                                             "type" : "image",
-                                             "id" : "row_image",
-                                             "selector" : "a>img",
-                                             "attr" : "src"
-                                          },
-                                          {
-                                             "type" : "text",
-                                             "id" : "row_main_text",
-                                             "selector" : "td:eq(1)>a",
-                                             "attr" : "text"
-                                          },
-                                          {
-                                             "type" : "text",
-                                             "id" : "row_small_text",
-                                             "selector" : ".small b",
-                                             "attr" : "text"
-                                          }
-                                       ]
-                                 }
-                              ]
+                              {
+                                 "type" : "list_adapter",
+                                 "layout_name" : "image_w_two_lines_list_row",
+                                 "data" :
+                                    [
+                                       {
+                                          "type" : "image",
+                                          "id" : "row_image",
+                                          "selector" : "a>img",
+                                          "attr" : "src"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_main_text",
+                                          "selector" : "td:eq(1)>a",
+                                          "attr" : "text"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_small_text",
+                                          "selector" : ".small b",
+                                          "attr" : "text"
+                                       }
+                                    ]
+                              }
                         }
                      ]
                }
@@ -81,33 +79,31 @@
                            "id" : "list_content",
                            "selector" : ".include_0>tbody>tr>td",
                            "data" :
-                              [
-                                 {
-                                    "type" : "list_row",
-                                    "layout_name" : "image_w_two_lines_list_row",
-                                    "data" :
-                                       [
-                                          {
-                                             "type" : "image",
-                                             "id" : "row_image",
-                                             "selector" : "a>img",
-                                             "attr" : "src"
-                                          },
-                                          {
-                                             "type" : "text",
-                                             "id" : "row_main_text",
-                                             "selector" : "a>b",
-                                             "attr" : "text"
-                                          },
-                                          {
-                                             "type" : "text",
-                                             "id" : "row_small_text",
-                                             "selector" : ".info",
-                                             "attr" : "text"
-                                          }
-                                       ]
-                                 }
-                              ],
+                              {
+                                 "type" : "list_adapter",
+                                 "layout_name" : "image_w_two_lines_list_row",
+                                 "data" :
+                                    [
+                                       {
+                                          "type" : "image",
+                                          "id" : "row_image",
+                                          "selector" : "a>img",
+                                          "attr" : "src"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_main_text",
+                                          "selector" : "a>b",
+                                          "attr" : "text"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_small_text",
+                                          "selector" : ".info",
+                                          "attr" : "text"
+                                       }
+                                    ]
+                              },
                            "click" :
                               {
                                  "action" : "open",
@@ -140,33 +136,31 @@
                            "id" : "list_content",
                            "selector" : ".include_1 td",
                            "data" :
-                              [
-                                 {
-                                    "type" : "list_row",
-                                    "layout_name" : "image_w_two_lines_list_row",
-                                    "data" :
-                                       [
-                                          {
-                                             "type" : "image",
-                                             "id" : "row_image",
-                                             "selector" : "img",
-                                             "attr" : "src"
-                                          },
-                                          {
-                                             "type" : "text",
-                                             "id" : "row_main_text",
-                                             "selector" : "a b",
-                                             "attr" : "text"
-                                          },
-                                          {
-                                             "type" : "text",
-                                             "id" : "row_small_text",
-                                             "selector" : ".info",
-                                             "attr" : "text"
-                                          }
-                                       ]
-                                 }
-                              ],
+                              {
+                                 "type" : "list_adapter",
+                                 "layout_name" : "image_w_two_lines_list_row",
+                                 "data" :
+                                    [
+                                       {
+                                          "type" : "image",
+                                          "id" : "row_image",
+                                          "selector" : "img",
+                                          "attr" : "src"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_main_text",
+                                          "selector" : "a b",
+                                          "attr" : "text"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_small_text",
+                                          "selector" : ".info",
+                                          "attr" : "text"
+                                       }
+                                    ]
+                              },
                            "click" :
                               {
                                  "action" : "open",
@@ -199,27 +193,25 @@
                            "id" : "list_content",
                            "selector" : ".include_0>tbody>tr>td",
                            "data" :
-                              [
-                                 {
-                                    "type" : "list_row",
-                                    "layout_name" : "two_lines_list_row",
-                                    "data" :
-                                       [
-                                          {
-                                             "type" : "text",
-                                             "id" : "row_main_text",
-                                             "selector" : "a>b",
-                                             "attr" : "text"
-                                          },
-                                          {
-                                             "type" : "text",
-                                             "id" : "row_small_text",
-                                             "selector" : ".info",
-                                             "attr" : "text"
-                                          }
-                                       ]
-                                 }
-                              ],
+                              {
+                                 "type" : "list_adapter",
+                                 "layout_name" : "two_lines_list_row",
+                                 "data" :
+                                    [
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_main_text",
+                                          "selector" : "a>b",
+                                          "attr" : "text"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_small_text",
+                                          "selector" : ".info",
+                                          "attr" : "text"
+                                       }
+                                    ]
+                              },
                            "click" :
                               {
                                  "action" : "open",
@@ -247,21 +239,19 @@
                            "id" : "list_content",
                            "selector" : ".menu_text:eq(0)",
                            "data" :
-                              [
-                                 {
-                                    "type" : "list_row",
-                                    "layout_name" : "one_line_list_row",
-                                    "data" :
-                                       [
-                                          {
-                                             "type" : "text",
-                                             "id" : "text",
-                                             "selector" : "a[href!=/]",
-                                             "attr" : "text"
-                                          }
-                                       ]
-                                 }
-                              ],
+                              {
+                                 "type" : "list_adapter",
+                                 "layout_name" : "one_line_list_row",
+                                 "data" :
+                                    [
+                                       {
+                                          "type" : "text",
+                                          "id" : "text",
+                                          "selector" : "a[href!=/]",
+                                          "attr" : "text"
+                                       }
+                                    ]
+                              },
                            "click" :
                               {
                                  "action" : "open",
