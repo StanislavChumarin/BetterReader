@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.staschum.R;
+import com.staschum.html2view.ContentViewFactory;
 import com.staschum.html2view.ContentViewer;
 import com.staschum.html2view.ListAdapterFactory;
 import com.staschum.html2view.Utils;
 import com.staschum.html2view.listadapter.BaseListAdapter;
-import com.staschum.html2view.objects.FragmentDescriptor;
+import com.staschum.html2view.objects.H2View;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -42,12 +42,8 @@ public class SingleListFragment extends ContentFragment {
 	private boolean updating;
 
 
-	public static ContentFragment createFragment(String url) {
-		ContentFragment fragment = new SingleListFragment();
-		Bundle args = new Bundle();
-		args.putString(URL_KEY, url);
-		fragment.setArguments(args);
-		return fragment;
+	public static ContentFragment createFragment() {
+		return new SingleListFragment();
 	}
 
 	@Override
@@ -60,17 +56,13 @@ public class SingleListFragment extends ContentFragment {
 		super.onActivityCreated(savedInstanceState);
 		activity = getActivity();
 
-		activity.setTitle(document.select("title").text());
-
-		if (fragmentData.isEmpty())
+		if (views.isEmpty())
 			return;
 
-		View header = activity.getLayoutInflater().inflate(R.layout.title_image_description_layout, null);
-		((TextView) header.findViewById(R.id.title_text)).setText(document.select("title").text());
-
-		FragmentDescriptor data = fragmentData.get(0);
+		for (H2View view : views) {
+			ContentViewFactory.createView(activity, document, view);
+		}
 		listView = (ListView) activity.findViewById(R.id.list_content);
-		listView.addHeaderView(header, null, false);
 		FragmentDescriptor adapterDescriptor = data.getData().get(0);
 		listAdapter = ListAdapterFactory.createListAdapter(activity, adapterDescriptor);
 		listView.setAdapter(listAdapter);

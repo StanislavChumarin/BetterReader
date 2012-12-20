@@ -1,7 +1,5 @@
 package com.staschum.html2view.objects;
 
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * User: schumarin
@@ -13,18 +11,21 @@ public class H2View<T> {
 	public final String viewType;
 	public final String viewId;
 	public final String selector;
-	public final String attribute;
-	private T innerStructure;
+	public final T innerStructure;
+	public final H2Click click;
+	public final H2Pager pager;
 
-	public H2View(String viewType, String viewId, String selector, String attribute, T innerStructure) {
+	public H2View(String viewType, String viewId, String selector, T innerStructure, H2Click click, H2Pager pager) {
 		this.viewType = viewType;
 		this.viewId = viewId;
 		this.selector = selector;
-		this.attribute = attribute;
 		this.innerStructure = innerStructure;
+		this.click = click;
+		this.pager = pager;
 	}
 
-	public T getInnerStructure() {
-		return innerStructure;
+	@Override
+	public String toString() {
+		return "\n		H2View: [" + viewType + ", " + viewId + ", " + selector + ", " + innerStructure + ", " + click  + ", " + pager + "]";
 	}
 }

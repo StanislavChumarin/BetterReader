@@ -1,7 +1,5 @@
 package com.staschum.html2view.objects;
 
-import com.staschum.html2view.fragments.ContentFragment;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,5 +27,10 @@ public class H2Screen {
 		List<H2View> result = new ArrayList<H2View>();
 		Collections.copy(result, views);
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "\n	H2Screen: [" + screenName + ", " + titleSelector + ", " + views + "]";
 	}
 }

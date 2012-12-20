@@ -134,16 +134,6 @@ public abstract class Utils {
 
 	}
 
-
-	public static JSONObject getDataFromJsonArray(JSONArray jsonArray, int index) {
-		try {
-			return jsonArray.getJSONObject(index);
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	public static void CopyStream(InputStream is, OutputStream os)
 	{
 		final int buffer_size=1024;
@@ -160,5 +150,7 @@ public abstract class Utils {
 		}
 		catch(Exception ex){}
 	}
+
+
 
 }

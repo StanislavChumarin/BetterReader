@@ -35,7 +35,7 @@
                            "data" :
                               {
                                  "type" : "list_adapter",
-                                 "layout_name" : "image_w_two_lines_list_row",
+                                 "layout_name" : "image_with_two_lines_list_row",
                                  "data" :
                                     [
                                        {
@@ -81,7 +81,7 @@
                            "data" :
                               {
                                  "type" : "list_adapter",
-                                 "layout_name" : "image_w_two_lines_list_row",
+                                 "layout_name" : "image_with_two_lines_list_row",
                                  "data" :
                                     [
                                        {
@@ -138,7 +138,7 @@
                            "data" :
                               {
                                  "type" : "list_adapter",
-                                 "layout_name" : "image_w_two_lines_list_row",
+                                 "layout_name" : "image_with_two_lines_list_row",
                                  "data" :
                                     [
                                        {

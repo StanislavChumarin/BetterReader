@@ -5,10 +5,9 @@ import com.staschum.html2view.listadapter.BaseListAdapter;
 import com.staschum.html2view.listadapter.ImageW2LinesAdapter;
 import com.staschum.html2view.listadapter.OneLineListAdapter;
 import com.staschum.html2view.listadapter.TwoLineListAdapter;
-import com.staschum.html2view.objects.FragmentDescriptor;
+import com.staschum.html2view.objects.H2Adapter;
+import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,10 +43,10 @@ public class ListAdapterFactory {
 		public abstract BaseListAdapter getListAdapter(Context context);
 	}
 
-	public static BaseListAdapter createListAdapter(Context context, FragmentDescriptor descriptor) {
+	public static BaseListAdapter createListAdapter(Context context, Elements elements, H2Adapter h2Adapter) {
 		BaseListAdapter result;
-		result = Adapter.valueOf(descriptor.getLayoutName().toUpperCase()).getListAdapter(context);
-
+		result = Adapter.valueOf(h2Adapter.adapterName.toUpperCase()).getListAdapter(context);
+		result.addData(elements, h2Adapter.getViews());
 		return result;
 	}
 }

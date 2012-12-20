@@ -1,7 +1,6 @@
 package com.staschum.html2view.listadapter;
 
-import com.staschum.html2view.objects.FragmentDescriptor;
-import org.json.JSONArray;
+import com.staschum.html2view.objects.H2View;
 import org.jsoup.select.Elements;
 
 import java.util.List;
@@ -13,6 +12,6 @@ import java.util.List;
  * Time: 15:23
  */
 public interface H2VListAdapter {
-	void addData(Elements elements, List<FragmentDescriptor> descriptors);
+	void addData(Elements elements, List<H2View> descriptors);
 
 }

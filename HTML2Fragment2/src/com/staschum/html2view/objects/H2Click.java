@@ -17,4 +17,9 @@ public class H2Click {
 		this.selector = selector;
 		this.attribute = attribute;
 	}
+
+	@Override
+	public String toString() {
+		return "\n	H2Click: [" + actionName + ", " + selector + ", " + attribute + "]";
+	}
 }

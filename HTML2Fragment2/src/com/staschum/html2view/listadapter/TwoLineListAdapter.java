@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.staschum.R;
-import com.staschum.html2view.objects.FragmentDescriptor;
+import com.staschum.html2view.ContentViewFactory;
+import com.staschum.html2view.objects.H2Attribute;
+import com.staschum.html2view.objects.H2View;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -20,7 +22,7 @@ import java.util.Map;
  * User: schumarin
  * Date: 06.12.12
  * Time: 14:35
- * To change this template use File | Settings | File Templates.
+ * This adapter is used to show rows with two lines of text: Main text(bold, big) and secondary text(thin, small)
  */
 public class TwoLineListAdapter extends BaseListAdapter {
 
@@ -29,7 +31,7 @@ public class TwoLineListAdapter extends BaseListAdapter {
 	String mainTextKey = "main";
 	String secondaryTextKey = "secondary";
 
-	private List<Map<String, String>> content = new ArrayList<Map<String, String>>();
+	private List<Map<String, CharSequence>> content = new ArrayList<Map<String, CharSequence>>();
 
 	public TwoLineListAdapter(Context context) {
 		super(context);
@@ -42,7 +44,7 @@ public class TwoLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public Map<String, String> getItem(int i) {
+	public Map<String, CharSequence> getItem(int i) {
 		return content.get(i);
 	}
 
@@ -66,7 +68,7 @@ public class TwoLineListAdapter extends BaseListAdapter {
 		mainText = (TextView) view.findViewById(R.id.row_main_text);
 		secondaryText = (TextView) view.findViewById(R.id.row_small_text);
 
-		Map<String, String> item = getItem(position);
+		Map<String, CharSequence> item = getItem(position);
 		mainText.setText(item.get(mainTextKey));
 		secondaryText.setText(item.get(secondaryTextKey));
 
@@ -74,19 +76,32 @@ public class TwoLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void addData(Elements elements, List<FragmentDescriptor> descriptors) {
-		if(descriptors.size() < 2) {
+	public void addData(Elements elements, List<H2View> h2Views) {
+		if (h2Views.size() < 2) {
 			return;
 		}
-		String mainTextSelector = descriptors.get(0).getSelector();
-		String secondaryTextSelector = descriptors.get(1).getSelector();
+
 		for (Element parentElement : elements) {
-			String mainText = parentElement.select(mainTextSelector).text();
-			if (mainText.isEmpty())
+
+			CharSequence mainText = "";
+
+			String imageUrl = "";
+			CharSequence secondaryText = "";
+
+			for (H2View view : h2Views) {
+				if ("row_main_text".equals(view.viewId)) {
+					mainText = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
+					if (mainText.toString().trim().isEmpty())
+						break;
+				} else if ("row_small_text".equals(view.viewId)) {
+					secondaryText = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
+				}
+			}
+			if (mainText.toString().trim().isEmpty())
 				continue;
-			Map<String, String> entry = new HashMap<String, String>();
+
+			Map<String, CharSequence> entry = new HashMap<String, CharSequence>();
 			entry.put(mainTextKey, mainText);
-			String secondaryText = parentElement.select(secondaryTextSelector).text();
 
 			entry.put(secondaryTextKey, secondaryText);
 			content.add(entry);

@@ -27,4 +27,8 @@ public class H2Filter {
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return "\nH2Filter: [" + url + ", " + shouldExistSelector + ", " + screens + "]\n";
+	}
 }

@@ -2,9 +2,8 @@ package com.staschum.html2view.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import com.staschum.html2view.H2VObject;
-import com.staschum.html2view.objects.FragmentDescriptor;
-import org.json.JSONArray;
+import com.staschum.html2view.H2ViewContainer;
+import com.staschum.html2view.objects.H2View;
 import org.jsoup.nodes.Document;
 
 import java.util.List;
@@ -15,21 +14,18 @@ import java.util.List;
  * Date: 05.12.12
  * Time: 13:03
  */
-public abstract class ContentFragment extends Fragment implements H2VObject {
+public abstract class ContentFragment extends Fragment implements H2ViewContainer {
 
-	protected String url;
-	protected static String URL_KEY = "url";
 	protected Document document;
-	protected List<FragmentDescriptor> fragmentData;
+	protected List<H2View> views;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		url = getArguments().getString(URL_KEY);
 	}
 
-	public void setData(Document doc, List<FragmentDescriptor> fragmentData) {
+	public void setData(Document doc, List<H2View> views) {
 		this.document = doc;
-		this.fragmentData = fragmentData;
+		this.views = views;
 	}
 }

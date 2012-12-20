@@ -12,11 +12,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewer;
-import com.staschum.html2view.ImageLoader;
+import com.staschum.html2view.imageloader.ImageLoader;
 import com.staschum.html2view.ListAdapterFactory;
 import com.staschum.html2view.Utils;
 import com.staschum.html2view.listadapter.BaseListAdapter;
-import com.staschum.html2view.objects.FragmentDescriptor;
 import org.jsoup.select.Elements;
 
 import java.util.List;
@@ -29,12 +28,8 @@ import java.util.List;
  */
 public class DescriptionWithImageAndFileList extends ContentFragment {
 
-	public static ContentFragment createFragment(String url) {
-		ContentFragment fragment = new DescriptionWithImageAndFileList();
-		Bundle args = new Bundle();
-		args.putString(URL_KEY, url);
-		fragment.setArguments(args);
-		return fragment;
+	public static ContentFragment createFragment() {
+		return new DescriptionWithImageAndFileList();
 	}
 
 	@Override
@@ -52,25 +47,25 @@ public class DescriptionWithImageAndFileList extends ContentFragment {
 
 		activity.setTitle(document.select("title").text());
 
-		if (fragmentData.size() < 4)
+		if (views.size() < 4)
 			return;
 
-		FragmentDescriptor data = fragmentData.get(0);
+		FragmentDescriptor data = views.get(0);
 		View header_description = activity.getLayoutInflater().inflate(R.layout.title_image_description_layout, null);
 		TextView titleText = (TextView) header_description.findViewById(R.id.title_text);
 		titleText.setText(document.select(data.getSelector()).text());
 
-		data = fragmentData.get(1);
+		data = views.get(1);
 		ImageView bigImage = (ImageView) header_description.findViewById(R.id.big_image);
 		imageLoader.DisplayImage(document.select(data.getSelector()).attr("src"), bigImage);
 		bigImage.setVisibility(View.VISIBLE);
 
-		data = fragmentData.get(2);
+		data = views.get(2);
 		TextView descriptionText = (TextView) header_description.findViewById(R.id.description_text);
 		descriptionText.setText(Html.fromHtml(document.select(data.getSelector()).outerHtml().replace("<a", "<b").replace("</a", "</b")));
 		descriptionText.setVisibility(View.VISIBLE);
 
-		data = fragmentData.get(3);
+		data = views.get(3);
 		final ListView listView = (ListView) activity.findViewById(R.id.list_content);
 		listView.addHeaderView(header_description, null, false);
 		Elements dataForAdapter = document.select(data.getSelector());

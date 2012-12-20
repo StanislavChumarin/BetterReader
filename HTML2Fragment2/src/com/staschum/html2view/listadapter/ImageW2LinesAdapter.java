@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.staschum.R;
-import com.staschum.html2view.ImageLoader;
-import com.staschum.html2view.objects.FragmentDescriptor;
+import com.staschum.html2view.ContentViewFactory;
+import com.staschum.html2view.imageloader.ImageLoader;
+import com.staschum.html2view.objects.H2Attribute;
+import com.staschum.html2view.objects.H2View;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -33,7 +35,7 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 	public ImageW2LinesAdapter(Context context) {
 		super(context);
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		imageLoader = new ImageLoader(context);
+		imageLoader = ImageLoader.getInstance(context);
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 
 		RowContent rowContent = getItem(position);
 
-		mainText.setText(rowContent.getMaintext());
+		mainText.setText(rowContent.getMainText());
 		secondaryText.setText(rowContent.getSecondaryText());
 
 		imageLoader.DisplayImage(rowContent.getImageUrl(), image);
@@ -72,20 +74,28 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void addData(Elements elements, List<FragmentDescriptor> descriptors) {
-		if (descriptors.size() < 3)
-			return;
-
-		String imageSelector = descriptors.get(0).getSelector();
-		String mainTextSelector = descriptors.get(1).getSelector();
-		String secondaryTextSelector = descriptors.get(2).getSelector();
+	public void addData(Elements elements, List<H2View> h2Views) {
 
 		for (Element parentElement : elements) {
-			String mainText = parentElement.select(mainTextSelector).text();
-			if (mainText.isEmpty())
+
+			CharSequence mainText = "";
+
+			String imageUrl = "";
+			CharSequence secondaryText = "";
+
+			for (H2View view : h2Views) {
+				if("row_main_text".equals(view.viewId)) {
+					mainText = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
+					if (mainText.toString().trim().isEmpty())
+						break;
+				} else if("row_small_text".equals(view.viewId)) {
+					secondaryText = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
+				} else if("row_image".equals(view.viewId)) {
+					imageUrl = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure).toString();
+				}
+			}
+			if (mainText.toString().trim().isEmpty())
 				continue;
-			String imageUrl = parentElement.select(imageSelector).attr("src");
-			String secondaryText = parentElement.select(secondaryTextSelector).text();
 
 			content.add(new RowContent(imageUrl, mainText, secondaryText));
 		}
@@ -95,12 +105,12 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 
 	private static class RowContent {
 		private final String imageUrl;
-		private final String maintext;
-		private final String secondaryText;
+		private final CharSequence mainText;
+		private final CharSequence secondaryText;
 
-		public RowContent(String imageUrl, String mainText, String secondaryText) {
+		public RowContent(String imageUrl, CharSequence mainText, CharSequence secondaryText) {
 			this.imageUrl = imageUrl;
-			this.maintext = mainText;
+			this.mainText = mainText;
 			this.secondaryText = secondaryText;
 		}
 
@@ -108,11 +118,11 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 			return imageUrl;
 		}
 
-		public String getMaintext() {
-			return maintext;
+		public CharSequence getMainText() {
+			return mainText;
 		}
 
-		public String getSecondaryText() {
+		public CharSequence getSecondaryText() {
 			return secondaryText;
 		}
 	}

@@ -2,6 +2,8 @@ package com.staschum.html2view.listadapter;
 
 import android.content.Context;
 import android.widget.BaseAdapter;
+import com.staschum.html2view.objects.H2View;
+import org.jsoup.select.Elements;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,4 +18,5 @@ public abstract class BaseListAdapter extends BaseAdapter implements H2VListAdap
 	public BaseListAdapter(Context context) {
 		this.context = context;
 	}
+
 }

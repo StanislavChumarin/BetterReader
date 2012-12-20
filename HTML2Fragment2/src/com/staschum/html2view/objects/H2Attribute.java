@@ -12,4 +12,9 @@ public class H2Attribute {
 	public H2Attribute(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "Attribute: [" + name + "]";
+	}
 }

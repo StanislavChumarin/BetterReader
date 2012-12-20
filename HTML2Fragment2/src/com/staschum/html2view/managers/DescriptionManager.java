@@ -1,8 +1,6 @@
 package com.staschum.html2view.managers;
 
 import android.content.Context;
-import com.staschum.html2view.Utils;
-import com.staschum.html2view.objects.FragmentDescriptor;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.nodes.Document;
@@ -29,29 +27,6 @@ public class DescriptionManager {
 
 	public DescriptionManager(Context context) {
 		this.context = context;
-	}
-
-	public FragmentDescriptor getDescription(String url, Document doc, int fileId, boolean renewJson) {
-		if (cachedJson == null || renewJson) {
-			try {
-				cachedJson = new JSONObject(readRawTextFile(context, fileId));
-			} catch (JSONException e) {
-				throw new IllegalArgumentException(e);
-			}
-		}
-		Iterator<String> iterator = cachedJson.keys();
-		Set<String> keys = new TreeSet<String>();
-		while(iterator.hasNext()) {
-			String key = iterator.next();
-			keys.add(key);
-		}
-		for (String key : keys) {
-			FragmentDescriptor description = new FragmentDescriptor(FragmentDescriptor.getJSONObject(cachedJson, key));
-			if (url.startsWith(description.getTargetUrl()) && doc.select(description.getRequiredXPath()).size() != 0) {
-				return description;
-			}
-		}
-		return null;
 	}
 
 	public static String readRawTextFile(Context ctx, int resId)

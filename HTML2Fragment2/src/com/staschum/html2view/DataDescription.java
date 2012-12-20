@@ -1,7 +1,5 @@
 package com.staschum.html2view;
 
-import com.staschum.html2view.action.ClickAction;
-
 /**
  * Created with IntelliJ IDEA.
  * User: schumarin
