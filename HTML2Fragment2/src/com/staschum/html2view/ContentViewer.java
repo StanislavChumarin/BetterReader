@@ -7,5 +7,5 @@ package com.staschum.html2view;
  * Time: 19:24
  */
 public interface ContentViewer {
-	void viewContent(String baseUrl, String url);
+	void viewContent(String url, String filterName);
 }

@@ -1,5 +1,6 @@
 package com.staschum.html2view;
 
+import android.app.Activity;
 import com.staschum.html2view.objects.H2View;
 import org.jsoup.nodes.Document;
 
@@ -12,5 +13,5 @@ import java.util.List;
  * Time: 13:58
  */
 public interface H2ViewContainer {
-	void setData(Document document, List<H2View> descriptors);
+	void setData(Document doc, List<H2View> views);
 }

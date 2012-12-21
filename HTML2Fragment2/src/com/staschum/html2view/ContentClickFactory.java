@@ -1,5 +1,6 @@
 package com.staschum.html2view;
 
+import android.app.Activity;
 import android.view.View;
 import com.staschum.html2view.action.Click;
 import com.staschum.html2view.objects.H2Click;
@@ -13,7 +14,14 @@ import org.jsoup.nodes.Document;
  * This factory creates click actions.
  */
 public class ContentClickFactory {
-	public static Click createClick(Document document, H2Click click) {
-		return null;  //To change body of created methods use File | Settings | File Templates.
+
+	private static enum ClickType {
+		OPEN, DOWNLOAD, PICTURE_GALLERY
 	}
+
+	public static Click createClick(Activity activity, Document document, H2Click click) {
+		ClickType.valueOf(click.actionName.toUpperCase());
+		return null;
+	}
+
 }

@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.staschum.R;
+import com.staschum.html2view.ContentClickFactory;
 import com.staschum.html2view.ContentViewFactory;
 import com.staschum.html2view.objects.H2Attribute;
+import com.staschum.html2view.objects.H2Click;
 import com.staschum.html2view.objects.H2View;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -68,12 +70,15 @@ public class OneLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void addData(Elements elements, List<H2View> views) {
+	public void addData(Elements elements, List<H2View> views, H2Click click) {
 		List<CharSequence> result = new ArrayList<CharSequence>();
 		if(views.isEmpty()) {
 			return;
 		}
 		for (Element element : elements) {
+			if (click != null) {
+				itemClicks.add(ContentClickFactory.createClick())
+			}
 			for (H2View view : views) {
 				CharSequence text = ContentViewFactory.getAttributeValue(element.select(view.selector), (H2Attribute) view.innerStructure);
 				if (text.toString().trim().isEmpty()) {

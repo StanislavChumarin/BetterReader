@@ -14,13 +14,15 @@ public class H2Adapter {
 
 	public final String type;
 	public final String adapterName;
+	public final H2Click click;
 
 	private List<H2View> views;
 
-	public H2Adapter(String type, String adapterName, List<H2View> views) {
+	public H2Adapter(String type, String adapterName, List<H2View> views, H2Click click) {
 		this.type = type;
 		this.adapterName = adapterName;
 		this.views = views;
+		this.click = click;
 	}
 
 	public List<H2View> getViews() {
@@ -31,6 +33,6 @@ public class H2Adapter {
 
 	@Override
 	public String toString() {
-		return "\n	H2Adapter: [" + type + ", " + adapterName + ", " +views + "]";
+		return "\n	H2Adapter: [" + type + ", " + adapterName + ", " +views + ", " + click + "]";
 	}
 }

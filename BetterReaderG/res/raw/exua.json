@@ -102,13 +102,13 @@
                                           "selector" : ".info",
                                           "attr" : "text"
                                        }
-                                    ]
-                              },
-                           "click" :
-                              {
-                                 "action" : "open",
-                                 "selector" : ".include_0>tbody>tr>td>p>a:eq(0):not(.info)",
-                                 "attr" : "href"
+                                    ],
+                                 "click" :
+                                    {
+                                       "action" : "open",
+                                       "selector" : "p>a:eq(0):not(.info)",
+                                       "attr" : "href"
+                                    }
                               },
                            "pager" :
                               {
@@ -159,13 +159,13 @@
                                           "selector" : ".info",
                                           "attr" : "text"
                                        }
-                                    ]
-                              },
-                           "click" :
-                              {
-                                 "action" : "open",
-                                 "selector" : ".include_1 td a:has(b)",
-                                 "attr" : "href"
+                                    ],
+                                 "click" :
+                                    {
+                                       "action" : "open",
+                                       "selector" : "a:has(b)",
+                                       "attr" : "href"
+                                    }
                               },
                            "pager" :
                               {
@@ -210,13 +210,13 @@
                                           "selector" : ".info",
                                           "attr" : "text"
                                        }
-                                    ]
-                              },
-                           "click" :
-                              {
-                                 "action" : "open",
-                                 "selector" : ".include_0>tbody>tr>td>a",
-                                 "attr" : "href"
+                                    ],
+                                 "click" :
+                                    {
+                                       "action" : "open",
+                                       "selector" : "a:not(.info)",
+                                       "attr" : "href"
+                                    }
                               }
                         }
                      ]
@@ -250,13 +250,13 @@
                                           "selector" : "a[href!=/]",
                                           "attr" : "text"
                                        }
-                                    ]
-                              },
-                           "click" :
-                              {
-                                 "action" : "open",
-                                 "selector" : ".menu_text:eq(0)>a[href!=/]",
-                                 "attr" : "href"
+                                    ],
+                                 "click" :
+                                    {
+                                       "action" : "open",
+                                       "selector" : "a[href!=/]",
+                                       "attr" : "href"
+                                    }
                               }
                         }
                      ]

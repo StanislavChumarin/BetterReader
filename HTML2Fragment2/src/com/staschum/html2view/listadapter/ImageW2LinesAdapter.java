@@ -10,6 +10,7 @@ import com.staschum.R;
 import com.staschum.html2view.ContentViewFactory;
 import com.staschum.html2view.imageloader.ImageLoader;
 import com.staschum.html2view.objects.H2Attribute;
+import com.staschum.html2view.objects.H2Click;
 import com.staschum.html2view.objects.H2View;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -74,7 +75,7 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void addData(Elements elements, List<H2View> h2Views) {
+	public void addData(Elements elements, List<H2View> h2Views, H2Click click) {
 
 		for (Element parentElement : elements) {
 

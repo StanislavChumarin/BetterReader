@@ -7,10 +7,7 @@ package com.staschum.html2view.action;
  * Time: 19:24
  * To change this template use File | Settings | File Templates.
  */
-public class Click {
+public interface Click {
 
-	public void click() {
-
-	}
-
+	void click();
 }

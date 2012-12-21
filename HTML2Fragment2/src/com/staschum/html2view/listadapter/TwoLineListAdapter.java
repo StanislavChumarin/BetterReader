@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewFactory;
 import com.staschum.html2view.objects.H2Attribute;
+import com.staschum.html2view.objects.H2Click;
 import com.staschum.html2view.objects.H2View;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -76,7 +77,7 @@ public class TwoLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void addData(Elements elements, List<H2View> h2Views) {
+	public void addData(Elements elements, List<H2View> h2Views, H2Click click) {
 		if (h2Views.size() < 2) {
 			return;
 		}

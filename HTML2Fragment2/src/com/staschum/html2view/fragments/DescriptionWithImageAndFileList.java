@@ -71,7 +71,7 @@ public class DescriptionWithImageAndFileList extends ContentFragment {
 		Elements dataForAdapter = document.select(data.getSelector());
 		FragmentDescriptor adapterDescriptor = data.getData().get(0);
 		BaseListAdapter listAdapter = ListAdapterFactory.createListAdapter(activity, adapterDescriptor);
-		listAdapter.addData(dataForAdapter, adapterDescriptor.getData());
+		listAdapter.addData(dataForAdapter, adapterDescriptor.getData(), h2Adapter.click);
 		listView.setAdapter(listAdapter);
 
 		FragmentDescriptor action = data.getAction();

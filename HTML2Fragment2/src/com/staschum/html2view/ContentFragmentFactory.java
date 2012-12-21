@@ -1,5 +1,6 @@
 package com.staschum.html2view;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import com.staschum.html2view.fragments.DescriptionWithImageAndFileList;
 import com.staschum.html2view.fragments.SingleListFragment;

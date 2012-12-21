@@ -10,9 +10,8 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewer;
-import com.staschum.html2view.ViewComposer;
 import com.staschum.html2view.managers.DescriptionManager;
-import com.staschum.model.SupportedSite;
+import com.staschum.html2view.SupportedSite;
 import org.json.JSONException;
 import org.json.JSONObject;
 

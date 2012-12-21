@@ -1,5 +1,6 @@
 package com.staschum.html2view;
 
+import android.app.Activity;
 import android.content.Context;
 import com.staschum.html2view.listadapter.BaseListAdapter;
 import com.staschum.html2view.listadapter.ImageW2LinesAdapter;
@@ -43,10 +44,10 @@ public class ListAdapterFactory {
 		public abstract BaseListAdapter getListAdapter(Context context);
 	}
 
-	public static BaseListAdapter createListAdapter(Context context, Elements elements, H2Adapter h2Adapter) {
+	public static BaseListAdapter createListAdapter(Activity activity, Elements elements, H2Adapter h2Adapter) {
 		BaseListAdapter result;
-		result = Adapter.valueOf(h2Adapter.adapterName.toUpperCase()).getListAdapter(context);
-		result.addData(elements, h2Adapter.getViews());
+		result = Adapter.valueOf(h2Adapter.adapterName.toUpperCase()).getListAdapter(activity);
+		result.addData(elements, h2Adapter.getViews(), h2Adapter.click);
 		return result;
 	}
 }

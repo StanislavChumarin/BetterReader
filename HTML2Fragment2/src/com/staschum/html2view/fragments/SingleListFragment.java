@@ -35,7 +35,6 @@ public class SingleListFragment extends ContentFragment {
 	private List<String> actions = new ArrayList<String>();
 	private ListView listView;
 	private BaseListAdapter listAdapter;
-	private FragmentDescriptor pager;
 	private String nextPageUrl;
 	private Activity activity;
 	private PagesReceiver pagesReceiver;
@@ -111,7 +110,7 @@ public class SingleListFragment extends ContentFragment {
 		Elements dataForAdapter = doc.select(descriptor.getSelector());
 
 		FragmentDescriptor adapterDescriptor = descriptor.getData().get(0);
-		listAdapter.addData(dataForAdapter, adapterDescriptor.getData());
+		listAdapter.addData(dataForAdapter, adapterDescriptor.getData(), h2Adapter.click);
 
 		FragmentDescriptor action = descriptor.getAction();
 		actions.addAll(Utils.getValues(doc.select(action.getItemSelector()), action.getAttr()));

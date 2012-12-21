@@ -179,6 +179,7 @@ public class JSON2Objects {
 
 		String type = null;
 		String adapterName = null;
+		H2Click click = null;
 
 		List<H2View> views = new ArrayList<H2View>();
 		while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
@@ -188,6 +189,8 @@ public class JSON2Objects {
 						type = getStringValue(jsonParser);
 					} else if ("layout_name".equals(jsonParser.getCurrentName())) {
 						adapterName = getStringValue(jsonParser);
+					} else if ("click".equals(jsonParser.getCurrentName())) {
+						click = json2Click(jsonParser);
 					} else if ("data".equals(jsonParser.getCurrentName())) {
 						while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
 							views.add(json2View(jsonParser));
@@ -197,7 +200,7 @@ public class JSON2Objects {
 			}
 		}
 
-		return new H2Adapter(type, adapterName, views);
+		return new H2Adapter(type, adapterName, views, click);
 	}
 
 	public static String getStringValue(JsonParser jsonParser) throws IOException {
