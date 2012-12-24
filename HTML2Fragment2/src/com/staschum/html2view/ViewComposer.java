@@ -24,7 +24,6 @@ import java.util.Map;
  */
 public class ViewComposer {
 
-	private DataViewDescription description;
 	private Activity activity;
 	private Map<String, H2Filter> filterMap;
 
@@ -47,7 +46,7 @@ public class ViewComposer {
 //
 //				Document doc = Jsoup.parse(htmlSource, baseUrl);
 //
-//				FragmentDescriptor descriptor = new DescriptionManager(activity).getDescription(url, doc, fileId, false);
+//				FragmentDescriptor descriptor = new DescriptionManager(fragment).getDescription(url, doc, fileId, false);
 //
 //				ContentFragment fragment = ContentFragmentFactory.getFragment(baseUrl, descriptor.getLayoutName());
 //				List<FragmentDescriptor> fragmentData = descriptor.getData();

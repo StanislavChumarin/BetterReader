@@ -22,8 +22,7 @@ public class H2Filter {
 	}
 
 	public List<H2Screen> getScreens() {
-		List<H2Screen> result = new ArrayList<H2Screen>();
-		Collections.copy(result, screens);
+		List<H2Screen> result = new ArrayList<H2Screen>(screens);
 		return result;
 	}
 

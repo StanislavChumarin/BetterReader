@@ -30,7 +30,7 @@
                         },
                         {
                            "type" : "list",
-                           "id" : "list_content",
+                           "id" : "list_files",
                            "selector" : ".list tr:not(:eq(0))",
                            "data" :
                               {
@@ -107,7 +107,7 @@
                                     {
                                        "action" : "open",
                                        "selector" : "p>a:eq(0):not(.info)",
-                                       "attr" : "href"
+                                       "attr" : "abs:href"
                                     }
                               },
                            "pager" :
@@ -164,7 +164,7 @@
                                     {
                                        "action" : "open",
                                        "selector" : "a:has(b)",
-                                       "attr" : "href"
+                                       "attr" : "abs:href"
                                     }
                               },
                            "pager" :
@@ -215,7 +215,7 @@
                                     {
                                        "action" : "open",
                                        "selector" : "a:not(.info)",
-                                       "attr" : "href"
+                                       "attr" : "abs:href"
                                     }
                               }
                         }
@@ -237,7 +237,7 @@
                         {
                            "type" : "list",
                            "id" : "list_content",
-                           "selector" : ".menu_text:eq(0)",
+                           "selector" : ".menu_text:eq(0) a[href!=/]",
                            "data" :
                               {
                                  "type" : "list_adapter",
@@ -247,15 +247,15 @@
                                        {
                                           "type" : "text",
                                           "id" : "text",
-                                          "selector" : "a[href!=/]",
+                                          "selector" : "a",
                                           "attr" : "text"
                                        }
                                     ],
                                  "click" :
                                     {
                                        "action" : "open",
-                                       "selector" : "a[href!=/]",
-                                       "attr" : "href"
+                                       "selector" : "a",
+                                       "attr" : "abs:href"
                                     }
                               }
                         }

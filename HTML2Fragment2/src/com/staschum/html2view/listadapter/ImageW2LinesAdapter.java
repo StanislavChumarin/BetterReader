@@ -1,13 +1,15 @@
 package com.staschum.html2view.listadapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.staschum.R;
-import com.staschum.html2view.ContentViewFactory;
+import com.staschum.html2view.Utils;
 import com.staschum.html2view.imageloader.ImageLoader;
 import com.staschum.html2view.objects.H2Attribute;
 import com.staschum.html2view.objects.H2Click;
@@ -33,10 +35,10 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 
 	private List<RowContent> content = new ArrayList<RowContent>();
 
-	public ImageW2LinesAdapter(Context context) {
-		super(context);
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		imageLoader = ImageLoader.getInstance(context);
+	public ImageW2LinesAdapter(Fragment fragment) {
+		super(fragment);
+		inflater = (LayoutInflater) fragment.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		imageLoader = ImageLoader.getInstance(fragment.getActivity());
 	}
 
 	@Override
@@ -86,13 +88,13 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 
 			for (H2View view : h2Views) {
 				if("row_main_text".equals(view.viewId)) {
-					mainText = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
+					mainText = Utils.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
 					if (mainText.toString().trim().isEmpty())
 						break;
 				} else if("row_small_text".equals(view.viewId)) {
-					secondaryText = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
+					secondaryText = Utils.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
 				} else if("row_image".equals(view.viewId)) {
-					imageUrl = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure).toString();
+					imageUrl = Utils.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure).toString();
 				}
 			}
 			if (mainText.toString().trim().isEmpty())

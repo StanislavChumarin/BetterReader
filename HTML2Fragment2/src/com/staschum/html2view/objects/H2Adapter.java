@@ -26,8 +26,7 @@ public class H2Adapter {
 	}
 
 	public List<H2View> getViews() {
-		List<H2View> result = new ArrayList<H2View>();
-		Collections.copy(result, views);
+		List<H2View> result = new ArrayList<H2View>(views);
 		return result;
 	}
 

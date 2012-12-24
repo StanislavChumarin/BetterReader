@@ -1,13 +1,15 @@
 package com.staschum.html2view.listadapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.staschum.R;
 import com.staschum.html2view.ContentClickFactory;
-import com.staschum.html2view.ContentViewFactory;
+import com.staschum.html2view.Utils;
 import com.staschum.html2view.objects.H2Attribute;
 import com.staschum.html2view.objects.H2Click;
 import com.staschum.html2view.objects.H2View;
@@ -30,9 +32,9 @@ public class OneLineListAdapter extends BaseListAdapter {
 
 	private List<CharSequence> content;
 
-	public OneLineListAdapter(Context context) {
-		super(context);
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public OneLineListAdapter(Fragment fragment) {
+		super(fragment);
+		inflater = fragment.getLayoutInflater(null);
 	}
 
 	@Override
@@ -76,15 +78,15 @@ public class OneLineListAdapter extends BaseListAdapter {
 			return;
 		}
 		for (Element element : elements) {
-			if (click != null) {
-				itemClicks.add(ContentClickFactory.createClick())
-			}
 			for (H2View view : views) {
-				CharSequence text = ContentViewFactory.getAttributeValue(element.select(view.selector), (H2Attribute) view.innerStructure);
+				CharSequence text = Utils.getAttributeValue(element.select(view.selector), (H2Attribute) view.innerStructure);
 				if (text.toString().trim().isEmpty()) {
 					break;
 				}
 				result.add(text);
+				if (click != null) {
+					itemClicks.add(ContentClickFactory.createClick(fragment, element, click));
+				}
 			}
 		}
 		content = result;

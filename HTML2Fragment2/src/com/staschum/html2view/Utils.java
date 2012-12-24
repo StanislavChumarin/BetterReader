@@ -3,7 +3,9 @@ package com.staschum.html2view;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.ResultReceiver;
+import android.text.Html;
 import android.util.Log;
+import com.staschum.html2view.objects.H2Attribute;
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,10 +26,9 @@ import java.util.List;
  * User: stanislavchumarin
  * Date: 02.12.12
  * Time: 16:37
- * To change this template use File | Settings | File Templates.
+ * Utils contains some methods that are used everywere.
  */
 public abstract class Utils {
-
 
 	public static int STATUS_OK = 0;
 	public static int STATUS_ERROR = 1;
@@ -78,6 +79,22 @@ public abstract class Utils {
 			result.add(item.attr(attr));
 		}
 		return result;
+	}
+
+	public static CharSequence getAttributeValue(Elements elements, String attribute) {
+		if ("text".equals(attribute)) {
+			return elements.text();
+		} else if ("html".equals(attribute)) {
+			return Html.fromHtml(elements.html().replace("<a", "<b").replace("</a", "</b"));
+		} else if ("outer_html".equals(attribute)) {
+			return Html.fromHtml(elements.outerHtml().replace("<a", "<b").replace("</a", "</b"));
+		} else {
+			return elements.attr(attribute);
+		}
+	}
+
+	public static CharSequence getAttributeValue(Elements elements, H2Attribute attribute) {
+		return getAttributeValue(elements, attribute.name);
 	}
 
 	//convert it to ExecutorService

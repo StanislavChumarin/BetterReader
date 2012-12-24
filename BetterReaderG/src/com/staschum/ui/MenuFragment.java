@@ -44,11 +44,7 @@ public class MenuFragment extends SherlockFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		contentViewer = (ContentViewer) getSherlockActivity();
-		try {
-			supportedSites.add(new SupportedSite("EX.UA", "http://www.ex.ua", new JSONObject(DescriptionManager.readRawTextFile(getActivity(), R.raw.exua))));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+			supportedSites.add(new SupportedSite("EX.UA", "http://www.ex.ua", DescriptionManager.readRawTextFile(getActivity(), R.raw.exua)));
 
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.menu_list_row, R.id.text);
 		for (String name : getNames(supportedSites)) {
@@ -60,7 +56,7 @@ public class MenuFragment extends SherlockFragment {
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				contentViewer.viewContent(supportedSites.get(i).getUrl(), "/");
+				contentViewer.openSite(supportedSites.get(i));
 
 			}
 		});

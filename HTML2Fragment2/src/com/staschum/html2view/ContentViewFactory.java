@@ -1,7 +1,6 @@
 package com.staschum.html2view;
 
-import android.app.Activity;
-import android.text.Html;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -14,7 +13,6 @@ import com.staschum.html2view.objects.H2Adapter;
 import com.staschum.html2view.objects.H2Attribute;
 import com.staschum.html2view.objects.H2View;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,16 +26,16 @@ public class ContentViewFactory {
 	public static enum ViewType{
 		TEXT {
 			@Override
-			public void setData(final Activity activity, final Document document, final H2View view) {
-				int id = activity.getResources().getIdentifier(view.viewId, "id", activity.getPackageName());
-				TextView textView = (TextView) activity.findViewById(id);
-				textView.setText(getAttributeValue(document.select(view.selector), (H2Attribute) view.innerStructure));
+			public void setData(final Fragment fragment, final Document document, final H2View view) {
+				int id = fragment.getResources().getIdentifier(view.viewId, "id", fragment.getActivity().getPackageName());
+				TextView textView = (TextView) fragment.getView().findViewById(id);
+				textView.setText(Utils.getAttributeValue(document.select(view.selector), (H2Attribute) view.innerStructure));
 
 				if(view.click != null) {
 					textView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							ContentClickFactory.createClick(activity, document, view.click).click();
+							ContentClickFactory.createClick(fragment, document, view.click).click();
 						}
 					});
 				}
@@ -45,14 +43,14 @@ public class ContentViewFactory {
 		},
 		IMAGE {
 			@Override
-			public void setData(Activity activity, final Document document, final H2View view) {
-				int id = activity.getResources().getIdentifier(view.viewId, "id", activity.getPackageName());
-				String url = document.baseUri() + getAttributeValue(document.select(view.selector), (H2Attribute) view.innerStructure);
-				ImageView imageView = (ImageView) activity.findViewById(id);
-				ImageLoader.getInstance(activity).DisplayImage(url, imageView);
+			public void setData(Fragment fragment, final Document document, final H2View view) {
+				int id = fragment.getResources().getIdentifier(view.viewId, "id", fragment.getActivity().getPackageName());
+				String url = document.baseUri() + Utils.getAttributeValue(document.select(view.selector), (H2Attribute) view.innerStructure);
+				ImageView imageView = (ImageView) fragment.getView().findViewById(id);
+				ImageLoader.getInstance(fragment.getActivity()).DisplayImage(url, imageView);
 
 				if(view.click != null) {
-					final Click click = ContentClickFactory.createClick(activity, document, view.click);
+					final Click click = ContentClickFactory.createClick(fragment, document, view.click);
 					imageView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -64,10 +62,10 @@ public class ContentViewFactory {
 		},
 		LIST {
 			@Override
-			public void setData(final Activity activity, final Document document, final H2View view) {
-				int id = activity.getResources().getIdentifier(view.viewId, "id", activity.getPackageName());
-				ListView listView = (ListView) activity.findViewById(id);
-				final BaseListAdapter baseListAdapter = ListAdapterFactory.createListAdapter(activity, document.select(view.selector), (H2Adapter) view.innerStructure);
+			public void setData(final Fragment fragment, final Document document, final H2View view) {
+				int id = fragment.getResources().getIdentifier(view.viewId, "id", fragment.getActivity().getPackageName());
+				ListView listView = (ListView) fragment.getView().findViewById(id);
+				final BaseListAdapter baseListAdapter = ListAdapterFactory.createListAdapter(fragment, document.select(view.selector), (H2Adapter) view.innerStructure);
 				listView.setAdapter(baseListAdapter);
 
 				if(((H2Adapter)view.innerStructure).click != null) {
@@ -86,30 +84,18 @@ public class ContentViewFactory {
 					listView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							ContentClickFactory.createClick(activity, document, view.click).click();
+							ContentClickFactory.createClick(fragment, document, view.click).click();
 						}
 					});
 				}
 			}
 		};
 
-		public abstract void setData(Activity activity, Document document, H2View view);
+		public abstract void setData(Fragment fragment, Document document, H2View view);
 
 	}
-	public static void createView(Activity activity, Document document, H2View view) {
-		ViewType.valueOf(view.viewType.toUpperCase()).setData(activity, document, view);
-	}
-
-	public static CharSequence getAttributeValue(Elements elements, H2Attribute attribute) {
-		if ("text".equals(attribute.name)) {
-			return elements.text();
-		} else if ("html".equals(attribute.name)) {
-			return Html.fromHtml(elements.html().replace("<a", "<b").replace("</a", "</b"));
-		} else if ("outer_html".equals(attribute.name)) {
-			return Html.fromHtml(elements.outerHtml().replace("<a", "<b").replace("</a", "</b"));
-		} else {
-			return elements.attr(attribute.name);
-		}
+	public static void createView(Fragment fragment, Document document, H2View view) {
+		ViewType.valueOf(view.viewType.toUpperCase()).setData(fragment, document, view);
 	}
 
 }

@@ -8,4 +8,6 @@ package com.staschum.html2view;
  */
 public interface ContentViewer {
 	void viewContent(String url, String filterName);
+
+	void openSite(SupportedSite supportedSite);
 }

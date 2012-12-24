@@ -1,5 +1,6 @@
 package com.staschum.html2view.listadapter;
 
+import android.app.Activity;
 import com.staschum.html2view.objects.H2Click;
 import com.staschum.html2view.objects.H2View;
 import org.jsoup.select.Elements;

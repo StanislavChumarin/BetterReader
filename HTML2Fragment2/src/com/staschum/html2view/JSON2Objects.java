@@ -158,6 +158,7 @@ public class JSON2Objects {
 		String actionName = null;
 		String selector = null;
 		String attribute = null;
+		String filterName = null;
 
 		while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
 			switch (jsonParser.getCurrentToken()) {
@@ -168,11 +169,13 @@ public class JSON2Objects {
 						selector = getStringValue(jsonParser);
 					} else if ("attr".equals(jsonParser.getCurrentName())) {
 						attribute = getStringValue(jsonParser);
+					} else if ("filter_name".equals(jsonParser.getCurrentName())) {
+						filterName = getStringValue(jsonParser);
 					}
 					break;
 			}
 		}
-		return new H2Click(actionName, selector, attribute);
+		return new H2Click(actionName, selector, attribute, filterName);
 	}
 
 	public static H2Adapter json2Adapter(JsonParser jsonParser) throws IOException {

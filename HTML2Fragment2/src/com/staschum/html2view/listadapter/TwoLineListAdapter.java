@@ -1,12 +1,15 @@
 package com.staschum.html2view.listadapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.staschum.R;
-import com.staschum.html2view.ContentViewFactory;
+import com.staschum.html2view.ContentClickFactory;
+import com.staschum.html2view.Utils;
 import com.staschum.html2view.objects.H2Attribute;
 import com.staschum.html2view.objects.H2Click;
 import com.staschum.html2view.objects.H2View;
@@ -34,9 +37,9 @@ public class TwoLineListAdapter extends BaseListAdapter {
 
 	private List<Map<String, CharSequence>> content = new ArrayList<Map<String, CharSequence>>();
 
-	public TwoLineListAdapter(Context context) {
-		super(context);
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public TwoLineListAdapter(Fragment fragment) {
+		super(fragment);
+		inflater = fragment.getLayoutInflater(null);
 	}
 
 	@Override
@@ -91,11 +94,14 @@ public class TwoLineListAdapter extends BaseListAdapter {
 
 			for (H2View view : h2Views) {
 				if ("row_main_text".equals(view.viewId)) {
-					mainText = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
+					mainText = Utils.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
 					if (mainText.toString().trim().isEmpty())
 						break;
 				} else if ("row_small_text".equals(view.viewId)) {
-					secondaryText = ContentViewFactory.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
+					secondaryText = Utils.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
+				}
+				if (click != null) {
+					itemClicks.add(ContentClickFactory.createClick(fragment, parentElement, click));
 				}
 			}
 			if (mainText.toString().trim().isEmpty())
