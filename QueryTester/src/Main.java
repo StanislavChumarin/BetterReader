@@ -1,10 +1,16 @@
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -15,27 +21,71 @@ public class Main {
 //
 //		doc = Jsoup.connect("http://www.ex.ua/ru/video/foreign?r=23775&p=1").get();
 //		System.out.println(doc.select(".include_0 ~ table td:has(img[src*=arr_r]) a").attr("href"));
-//
-//		doc = Jsoup.connect("http://www.ex.ua/ru/video/foreign?r=23775&p=2851").get();
-//		System.out.println(doc.select(".include_0 ~ table td:has(img[src*=arr_r]) a").attr("href").isEmpty());
+
+		Document doc = Jsoup.connect("http://www.fs.ua").get();
+		Elements elements = doc.select(".b-poster");
+		Elements elements1 = elements.get(0).select(".m-full");
+		String attr = (String) getAttributeValue(elements1, "text");
+		System.out.println(attr);
+
+//		Pattern pattern = Pattern.compile("'(.*?)'",Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+//		Matcher matcher = pattern.matcher(attr);
+//		if (matcher.find())
+//		{
+//			System.out.println(matcher.group(1));
+//		}
+
 //		Map<String, H2Filter> result = new TreeMap<String, H2Filter>();
 
-		JsonFactory jsonFactory = new JsonFactory();
-		JsonParser jsonParser = jsonFactory.createJsonParser(jsonString);
-
-		while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
-			if (jsonParser.getCurrentToken() == JsonToken.START_OBJECT) {
-				jsonParser.nextToken();
-			}
-
-			String fieldName = jsonParser.getCurrentName();
-			System.out.println(fieldName);
-//			result.put(fieldName, json2Filter(jsonParser));
-		}
-		jsonParser.close();
+//		JsonFactory jsonFactory = new JsonFactory();
+//		JsonParser jsonParser = jsonFactory.createJsonParser(jsonString);
+//
+//		while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
+//			if (jsonParser.getCurrentToken() == JsonToken.START_OBJECT) {
+//				jsonParser.nextToken();
+//			}
+//
+//			String fieldName = jsonParser.getCurrentName();
+//			System.out.println(fieldName);
+////			result.put(fieldName, json2Filter(jsonParser));
+//		}
+//		jsonParser.close();
 //		System.out.println(result);
 	}
 
+	public static CharSequence getAttributeValue(Elements elements, String attribute) {
+		CharSequence result = null;
+		String regexp = null;
+		if(attribute.contains("(") && attribute.contains(")")) {
+			regexp = attribute.substring(attribute.indexOf('(') + 1, attribute.lastIndexOf(')'));
+			attribute = attribute.substring(0, attribute.indexOf('('));
+		}
+		if ("own_text".equals(attribute)) {
+			Element first = elements.first();
+			if (first == null)
+				result = "";
+			else
+				result = first.ownText();
+		} else if ("text".equals(attribute)) {
+			result = elements.text();
+		} else if ("html".equals(attribute)) {
+//			result = Html.fromHtml(elements.html().replace("<a", "<b").replace("</a", "</b"));
+		} else if ("outer_html".equals(attribute)) {
+//			result = Html.fromHtml(elements.outerHtml().replace("<a", "<b").replace("</a", "</b"));
+		} else {
+			result = elements.attr(attribute);
+		}
+
+		if (regexp != null) {
+			Pattern pattern = Pattern.compile(regexp);
+			Matcher matcher = pattern.matcher(result);
+			if (matcher.find())
+			{
+				result = matcher.group(1);
+			}
+		}
+		return result;
+	}
 
 	private static String getJsonObjectAsString(JsonParser jsonParser) throws IOException {
 		int deepCount = 0;

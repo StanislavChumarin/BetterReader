@@ -20,6 +20,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
@@ -62,17 +64,6 @@ public abstract class Utils {
 		return result;
 	}
 
-	public static JSONArray getJSONArray(JSONObject jsonObject, String key) {
-		try {
-			return jsonObject.getJSONArray(key);
-		} catch (JSONException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-
-
 	public static List<String> getValues(Elements items, String attr) {
 		List<String> result = new ArrayList<String>();
 		for (Element item : items) {
@@ -82,15 +73,31 @@ public abstract class Utils {
 	}
 
 	public static CharSequence getAttributeValue(Elements elements, String attribute) {
-		if ("text".equals(attribute)) {
-			return elements.text();
-		} else if ("html".equals(attribute)) {
-			return Html.fromHtml(elements.html().replace("<a", "<b").replace("</a", "</b"));
-		} else if ("outer_html".equals(attribute)) {
-			return Html.fromHtml(elements.outerHtml().replace("<a", "<b").replace("</a", "</b"));
-		} else {
-			return elements.attr(attribute);
+		CharSequence result;
+		String regexp = null;
+		if(attribute.contains("(") && !attribute.contains(")")) {
+			regexp = attribute.substring(attribute.indexOf('(') + 1, attribute.lastIndexOf(')'));
+			attribute = attribute.substring(0, attribute.indexOf('('));
 		}
+		if ("text".equals(attribute)) {
+			result = elements.text();
+		} else if ("html".equals(attribute)) {
+			result = Html.fromHtml(elements.html().replace("<a", "<b").replace("</a", "</b"));
+		} else if ("outer_html".equals(attribute)) {
+			result = Html.fromHtml(elements.outerHtml().replace("<a", "<b").replace("</a", "</b"));
+		} else {
+			result = elements.attr(attribute);
+		}
+
+		if (regexp != null) {
+			Pattern pattern = Pattern.compile(regexp);
+			Matcher matcher = pattern.matcher(result);
+			if (matcher.find())
+			{
+				result = matcher.group(1);
+			}
+		}
+		return result;
 	}
 
 	public static CharSequence getAttributeValue(Elements elements, H2Attribute attribute) {

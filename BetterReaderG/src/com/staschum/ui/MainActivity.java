@@ -27,12 +27,12 @@ public class MainActivity extends BaseActivity implements ContentViewer {
 
 		setContentView(R.layout.single_fragment_activity);
 
-		setBehindContentView(R.layout.menu_frame);
-
-		FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();
-		mFrag = new MenuFragment();
-		t.replace(R.id.menu_fragment, mFrag);
-		t.commit();
+//		setBehindContentView(R.layout.menu_frame);
+//
+//		FragmentTransaction t = this.getSupportFragmentManager().beginTransaction();
+//		mFrag = new MenuFragment();
+//		t.replace(R.id.menu_fragment, mFrag);
+//		t.commit();
 
 //		getSupportFragmentManager().beginTransaction().add(R.id.content, new Fragment()).commit();
 

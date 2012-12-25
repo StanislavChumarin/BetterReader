@@ -42,7 +42,6 @@
     <orderEntry type="library" name="jsoup-1.7.1" level="project" />
     <orderEntry type="library" name="groundy-0.6" level="project" />
     <orderEntry type="library" name="jackson-core-2.1.1" level="project" />
-    <orderEntry type="module" module-name="QueryTester" />
   </component>
 </module>
 

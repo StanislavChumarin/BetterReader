@@ -45,6 +45,7 @@ public class MenuFragment extends SherlockFragment {
 		super.onActivityCreated(savedInstanceState);
 		contentViewer = (ContentViewer) getSherlockActivity();
 			supportedSites.add(new SupportedSite("EX.UA", "http://www.ex.ua", DescriptionManager.readRawTextFile(getActivity(), R.raw.exua)));
+		supportedSites.add(new SupportedSite("FS.UA", "http://www.fs.ua", DescriptionManager.readRawTextFile(getActivity(), R.raw.fsua)));
 
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.menu_list_row, R.id.text);
 		for (String name : getNames(supportedSites)) {
