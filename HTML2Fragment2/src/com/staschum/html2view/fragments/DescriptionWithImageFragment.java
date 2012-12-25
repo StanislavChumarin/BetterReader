@@ -38,9 +38,6 @@ public class DescriptionWithImageFragment extends ContentFragment {
 		if (views.size() < 3)
 			return;
 
-		if (views.isEmpty())
-			return;
-
 		for (H2View view : views) {
 			ContentViewFactory.createView(this, document, view);
 		}
