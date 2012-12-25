@@ -1,4 +1,4 @@
-package com.staschum.html2view;
+package com.staschum.html2view.imageloader;
 
 import java.util.Collections;
 import java.util.Iterator;

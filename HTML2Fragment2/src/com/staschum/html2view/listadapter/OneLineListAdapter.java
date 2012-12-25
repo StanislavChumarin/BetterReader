@@ -1,12 +1,18 @@
 package com.staschum.html2view.listadapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.staschum.R;
-import com.staschum.html2view.objects.FragmentDescriptor;
+import com.staschum.html2view.ContentClickFactory;
+import com.staschum.html2view.Utils;
+import com.staschum.html2view.objects.H2Attribute;
+import com.staschum.html2view.objects.H2Click;
+import com.staschum.html2view.objects.H2View;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
@@ -24,11 +30,11 @@ public class OneLineListAdapter extends BaseListAdapter {
 	int count;
 	LayoutInflater inflater;
 
-	private List<String> content;
+	private List<CharSequence> content;
 
-	public OneLineListAdapter(Context context) {
-		super(context);
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public OneLineListAdapter(Fragment fragment) {
+		super(fragment);
+		inflater = fragment.getLayoutInflater(null);
 	}
 
 	@Override
@@ -37,13 +43,13 @@ public class OneLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public String getItem(int i) {
+	public CharSequence getItem(int i) {
 		return content.get(i);
 	}
 
 	@Override
 	public long getItemId(int i) {
-		return 0;  //To change body of implemented methods use File | Settings | File Templates.
+		return i;
 	}
 
 	@Override
@@ -59,25 +65,29 @@ public class OneLineListAdapter extends BaseListAdapter {
 
 		text = (TextView) view.findViewById(R.id.text);
 
-		String item = getItem(position);
+		CharSequence item = getItem(position);
 		text.setText(item);
 
 		return view;
 	}
 
 	@Override
-	public void addData(Elements elements, List<FragmentDescriptor> descriptors) {
-		List<String> result = new ArrayList<String>();
-		if(descriptors.isEmpty()) {
+	public void addData(Elements elements, List<H2View> views, H2Click click) {
+		List<CharSequence> result = new ArrayList<CharSequence>();
+		if(views.isEmpty()) {
 			return;
 		}
-		String textSelector = descriptors.get(0).getSelector();
-		Elements requiredNodes = elements.select(textSelector);
-		for (Element element : requiredNodes) {
-				String text = element.text();
-				if (text.isEmpty())
-					continue;
+		for (Element element : elements) {
+			for (H2View view : views) {
+				CharSequence text = Utils.getAttributeValue(element.select(view.selector), (H2Attribute) view.innerStructure);
+				if (text.toString().trim().isEmpty()) {
+					break;
+				}
 				result.add(text);
+				if (click != null) {
+					itemClicks.add(ContentClickFactory.createClick(fragment, element, click));
+				}
+			}
 		}
 		content = result;
 		count = content.size();

@@ -1,10 +1,12 @@
-package com.staschum.html2view;
+package com.staschum.html2view.imageloader;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.widget.ImageView;
+import com.staschum.R;
+import com.staschum.html2view.Utils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -23,10 +25,21 @@ public class ImageLoader {
 	ExecutorService executorService;
 	Handler handler = new Handler();//handler to display images in UI thread
 
-	public ImageLoader(Context context) {
+	private static ImageLoader insstance;
+
+	private ImageLoader(Context context) {
 		fileCache = new FileCache(context);
 		executorService = Executors.newFixedThreadPool(5);
 	}
+
+	public static ImageLoader getInstance(Context context) {
+		if(insstance == null) {
+			insstance = new ImageLoader(context);
+		}
+		return insstance;
+	}
+
+	final int stub_id = R.drawable.loading;
 
 	public void DisplayImage(String url, ImageView imageView) {
 		imageViews.put(imageView, url);
@@ -35,6 +48,7 @@ public class ImageLoader {
 			imageView.setImageBitmap(bitmap);
 		else {
 			queuePhoto(url, imageView);
+			imageView.setImageResource(stub_id);
 		}
 	}
 
@@ -166,6 +180,8 @@ public class ImageLoader {
 				return;
 			if (bitmap != null)
 				photoToLoad.imageView.setImageBitmap(bitmap);
+			else
+				photoToLoad.imageView.setImageResource(stub_id);
 		}
 	}
 

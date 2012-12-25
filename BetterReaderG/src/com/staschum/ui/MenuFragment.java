@@ -10,7 +10,10 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewer;
-import com.staschum.model.SupportedSite;
+import com.staschum.html2view.managers.DescriptionManager;
+import com.staschum.html2view.SupportedSite;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +32,7 @@ public class MenuFragment extends SherlockFragment {
 
 	public MenuFragment() {
 		supportedSites = new ArrayList<SupportedSite>();
-		supportedSites.add(new SupportedSite("EX.UA", "http://www.ex.ua"));
+
 	}
 
 	@Override
@@ -41,16 +44,20 @@ public class MenuFragment extends SherlockFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		contentViewer = (ContentViewer) getSherlockActivity();
+			supportedSites.add(new SupportedSite("EX.UA", "http://www.ex.ua", DescriptionManager.readRawTextFile(getActivity(), R.raw.exua)));
+		supportedSites.add(new SupportedSite("FS.UA", "http://www.fs.ua", DescriptionManager.readRawTextFile(getActivity(), R.raw.fsua)));
 
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.menu_list_row, R.id.text);
-		arrayAdapter.addAll(getNames(supportedSites));
+		for (String name : getNames(supportedSites)) {
+			arrayAdapter.add(name);
+		}
 
 		ListView listView = (ListView) getActivity().findViewById(R.id.menu_content);
 		listView.setAdapter(arrayAdapter);
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				contentViewer.viewContent(supportedSites.get(i).getUrl(), "/");
+				contentViewer.openSite(supportedSites.get(i));
 
 			}
 		});

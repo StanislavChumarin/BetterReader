@@ -1,0 +1,124 @@
+{
+   "filter5" :
+      {
+         "url" : "http://www.fs.ua/",
+         "should_exist" : ".catalog-new-head h2",
+         "screens" :
+            [
+               {
+                  "layout_name" : "single_list",
+                  "title_selector" : ".b-header .b-title",
+                  "data" :
+                     [
+                        {
+                           "type" : "list",
+                           "id" : "list_content",
+                           "selector" : "h1",
+                           "data" :
+                              {
+                                 "type" : "list_adapter",
+                                 "layout_name" : "one_line_list_row",
+                                 "data" :
+                                    [
+                                       {
+                                          "type" : "text",
+                                          "id" : "text",
+                                          "selector" : ".m-themed",
+                                          "attr" : "text"
+                                       }
+                                    ],
+                                 "click" :
+                                    {
+                                       "action" : "open",
+                                       "selector" : ".m-themed",
+                                       "attr" : "abs:href"
+                                    }
+                              }
+                        }
+                     ]
+               },
+               {
+                  "layout_name" : "single_list",
+                  "title_selector" : ".catalog-new-head h2",
+                  "data" :
+                     [
+                        {
+                           "type" : "list",
+                           "id" : "list_content",
+                           "selector" : ".catalog-new-content tr",
+                           "data" :
+                              {
+                                 "type" : "list_adapter",
+                                 "layout_name" : "two_lines_list_row",
+                                 "data" :
+                                    [
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_main_text",
+                                          "selector" : ".item-link",
+                                          "attr" : "text"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_small_text",
+                                          "selector" : ".m-themed",
+                                          "attr" : "text"
+                                       }
+                                    ],
+                                 "click" :
+                                    {
+                                       "action" : "open",
+                                       "selector" : ".item-link",
+                                       "attr" : "abs:href"
+                                    }
+                              }
+                        }
+                     ]
+               },
+               {
+                  "layout_name" : "single_list",
+                  "title_selector" : ".l-content .b-title",
+                  "data" :
+                     [
+                        {
+                           "type" : "list",
+                           "id" : "list_content",
+                           "selector" : ".b-poster",
+                           "data" :
+                              {
+                                 "type" : "list_adapter",
+                                 "layout_name" : "image_with_two_lines_list_row",
+                                 "data" :
+                                    [
+                                       {
+                                          "type" : "image",
+                                          "id" : "row_image",
+                                          "selector" : ".b-poster",
+                                          "attr" : "style('(.*?)')"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_main_text",
+                                          "selector" : ".m-short",
+                                          "attr" : "text"
+                                       },
+                                       {
+                                          "type" : "text",
+                                          "id" : "row_small_text",
+                                          "selector" : ".m-full",
+                                          "attr" : "text"
+                                       }
+                                    ],
+                                 "click" :
+                                    {
+                                       "action" : "open",
+                                       "selector" : ".b-poster",
+                                       "attr" : "abs:href"
+                                    }
+                              }
+                        }
+                     ]
+               }
+            ]
+      }
+}

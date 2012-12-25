@@ -6,7 +6,7 @@
                 android:gravity="center">
 
     <ListView
-            android:id="@+id/list_content"
+            android:id="@+id/list_files"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

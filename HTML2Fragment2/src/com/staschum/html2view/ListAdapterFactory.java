@@ -1,14 +1,12 @@
 package com.staschum.html2view;
 
-import android.content.Context;
+import android.support.v4.app.Fragment;
 import com.staschum.html2view.listadapter.BaseListAdapter;
 import com.staschum.html2view.listadapter.ImageW2LinesAdapter;
 import com.staschum.html2view.listadapter.OneLineListAdapter;
 import com.staschum.html2view.listadapter.TwoLineListAdapter;
-import com.staschum.html2view.objects.FragmentDescriptor;
+import com.staschum.html2view.objects.H2Adapter;
 import org.jsoup.select.Elements;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,32 +20,32 @@ public class ListAdapterFactory {
 	private static enum Adapter {
 		TWO_LINES_LIST_ROW {
 			@Override
-			public BaseListAdapter getListAdapter(Context context) {
-				return new TwoLineListAdapter(context);
+			public BaseListAdapter getListAdapter(Fragment fragment) {
+				return new TwoLineListAdapter(fragment);
 			}
 		},
 		ONE_LINE_LIST_ROW {
 			@Override
-			public BaseListAdapter getListAdapter(Context context) {
-				return new OneLineListAdapter(context);
+			public BaseListAdapter getListAdapter(Fragment fragment) {
+				return new OneLineListAdapter(fragment);
 			}
 		},
-		IMAGE_W_TWO_LINES_LIST_ROW {
+		IMAGE_WITH_TWO_LINES_LIST_ROW {
 			@Override
-			public BaseListAdapter getListAdapter(Context context) {
-				ImageW2LinesAdapter imageW2LinesAdapter = new ImageW2LinesAdapter(context);
+			public BaseListAdapter getListAdapter(Fragment fragment) {
+				ImageW2LinesAdapter imageW2LinesAdapter = new ImageW2LinesAdapter(fragment);
 				imageW2LinesAdapter.imageLoader.clearCache();
 				return imageW2LinesAdapter;
 			}
 		};
 
-		public abstract BaseListAdapter getListAdapter(Context context);
+		public abstract BaseListAdapter getListAdapter(Fragment fragment);
 	}
 
-	public static BaseListAdapter createListAdapter(Context context, FragmentDescriptor descriptor) {
+	public static BaseListAdapter createListAdapter(Fragment fragment, Elements elements, H2Adapter h2Adapter) {
 		BaseListAdapter result;
-		result = Adapter.valueOf(descriptor.getLayoutName().toUpperCase()).getListAdapter(context);
-
+		result = Adapter.valueOf(h2Adapter.adapterName.toUpperCase()).getListAdapter(fragment);
+		result.addData(elements, h2Adapter.getViews(), h2Adapter.click);
 		return result;
 	}
 }
