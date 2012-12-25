@@ -2,25 +2,13 @@ package com.staschum.html2view.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewFactory;
-import com.staschum.html2view.ContentViewer;
 import com.staschum.html2view.imageloader.ImageLoader;
-import com.staschum.html2view.ListAdapterFactory;
-import com.staschum.html2view.Utils;
-import com.staschum.html2view.listadapter.BaseListAdapter;
 import com.staschum.html2view.objects.H2View;
-import org.jsoup.select.Elements;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,15 +16,15 @@ import java.util.List;
  * Date: 10.12.12
  * Time: 11:22
  */
-public class DescriptionWithImageAndFileList extends ContentFragment {
+public class DescriptionWithImageFragment extends ContentFragment {
 
 	public static ContentFragment createFragment() {
-		return new DescriptionWithImageAndFileList();
+		return new DescriptionWithImageFragment();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.list_fragment, null);
+		return inflater.inflate(R.layout.title_image_description_layout, null);
 	}
 
 	@Override
@@ -47,7 +35,7 @@ public class DescriptionWithImageAndFileList extends ContentFragment {
 		ImageLoader imageLoader = ImageLoader.getInstance(activity);
 		imageLoader.clearCache();
 
-		if (views.size() < 4)
+		if (views.size() < 3)
 			return;
 
 		if (views.isEmpty())

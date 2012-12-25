@@ -14,11 +14,9 @@ import com.staschum.html2view.managers.DescriptionManager;
 public class App extends Application implements IApplication {
 
 	private static IApplication instance;
-	private DescriptionManager descriptionManager;
 
-	public App(){
+	public App() {
 		instance = this;
-		descriptionManager = new DescriptionManager(this);
 	}
 
 	public static IApplication getInstance() {

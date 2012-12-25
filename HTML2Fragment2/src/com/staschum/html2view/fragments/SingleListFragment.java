@@ -1,28 +1,12 @@
 package com.staschum.html2view.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.ResultReceiver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewFactory;
-import com.staschum.html2view.ContentViewer;
-import com.staschum.html2view.ListAdapterFactory;
-import com.staschum.html2view.Utils;
-import com.staschum.html2view.listadapter.BaseListAdapter;
 import com.staschum.html2view.objects.H2View;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,12 +16,7 @@ import java.util.List;
  */
 public class SingleListFragment extends ContentFragment {
 
-	private List<String> actions = new ArrayList<String>();
-	private ListView listView;
-	private BaseListAdapter listAdapter;
-	private String nextPageUrl;
-	private Activity activity;
-//	private PagesReceiver pagesReceiver;
+	//	private PagesReceiver pagesReceiver;
 	private boolean updating;
 
 
@@ -46,16 +25,14 @@ public class SingleListFragment extends ContentFragment {
 	}
 
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.list_fragment, null);
+		return inflater.inflate(R.layout.list_fragment, container, false);
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		activity = getActivity();
 
 		if (views.isEmpty())
 			return;

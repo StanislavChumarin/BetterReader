@@ -10,10 +10,8 @@ import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewer;
-import com.staschum.html2view.managers.DescriptionManager;
 import com.staschum.html2view.SupportedSite;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.staschum.html2view.managers.DescriptionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,6 @@ import java.util.List;
  */
 public class MenuFragment extends SherlockFragment {
 
-	private List<String> menuNames = new ArrayList<String>();
 	private ContentViewer contentViewer;
 	private List<SupportedSite> supportedSites;
 
@@ -44,7 +41,7 @@ public class MenuFragment extends SherlockFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		contentViewer = (ContentViewer) getSherlockActivity();
-			supportedSites.add(new SupportedSite("EX.UA", "http://www.ex.ua", DescriptionManager.readRawTextFile(getActivity(), R.raw.exua)));
+		supportedSites.add(new SupportedSite("EX.UA", "http://www.ex.ua", DescriptionManager.readRawTextFile(getActivity(), R.raw.exua)));
 		supportedSites.add(new SupportedSite("FS.UA", "http://www.fs.ua", DescriptionManager.readRawTextFile(getActivity(), R.raw.fsua)));
 
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.menu_list_row, R.id.text);

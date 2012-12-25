@@ -25,7 +25,7 @@ public class ImageLoader {
 	ExecutorService executorService;
 	Handler handler = new Handler();//handler to display images in UI thread
 
-	private static ImageLoader insstance;
+	private static ImageLoader instance;
 
 	private ImageLoader(Context context) {
 		fileCache = new FileCache(context);
@@ -33,10 +33,10 @@ public class ImageLoader {
 	}
 
 	public static ImageLoader getInstance(Context context) {
-		if(insstance == null) {
-			insstance = new ImageLoader(context);
+		if (instance == null) {
+			instance = new ImageLoader(context);
 		}
-		return insstance;
+		return instance;
 	}
 
 	final int stub_id = R.drawable.loading;
@@ -46,7 +46,9 @@ public class ImageLoader {
 		Bitmap bitmap = memoryCache.get(url);
 		if (bitmap != null)
 			imageView.setImageBitmap(bitmap);
-		else {
+		else if (url == null || url.isEmpty()) {
+			imageView.setImageResource(R.drawable.empty);
+		} else {
 			queuePhoto(url, imageView);
 			imageView.setImageResource(stub_id);
 		}
@@ -67,7 +69,7 @@ public class ImageLoader {
 
 		//from web
 		try {
-			Bitmap bitmap = null;
+			Bitmap bitmap;
 			URL imageUrl = new URL(url);
 			HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
 			conn.setConnectTimeout(30000);

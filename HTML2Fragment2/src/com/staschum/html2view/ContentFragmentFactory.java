@@ -1,10 +1,9 @@
 package com.staschum.html2view;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
-import com.staschum.html2view.fragments.DescriptionWithImageAndFileList;
-import com.staschum.html2view.fragments.SingleListFragment;
 import com.staschum.html2view.fragments.ContentFragment;
+import com.staschum.html2view.fragments.DescriptionWithImageFragment;
+import com.staschum.html2view.fragments.SingleListFragment;
 import com.staschum.html2view.objects.H2Screen;
 import org.jsoup.nodes.Document;
 
@@ -23,10 +22,10 @@ public class ContentFragmentFactory {
 				return SingleListFragment.createFragment();
 			}
 		},
-		DESCRIPTION_WITH_IMAGE_AND_FILE_LIST {
+		DESCRIPTION_WITH_IMAGE {
 			@Override
 			public ContentFragment getFragment() {
-				return DescriptionWithImageAndFileList.createFragment();
+				return DescriptionWithImageFragment.createFragment();
 			}
 		};
 

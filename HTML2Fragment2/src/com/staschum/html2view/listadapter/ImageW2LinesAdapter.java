@@ -1,6 +1,5 @@
 package com.staschum.html2view.listadapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.staschum.R;
+import com.staschum.html2view.ContentClickFactory;
 import com.staschum.html2view.Utils;
 import com.staschum.html2view.imageloader.ImageLoader;
 import com.staschum.html2view.objects.H2Attribute;
@@ -87,19 +87,22 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 			CharSequence secondaryText = "";
 
 			for (H2View view : h2Views) {
-				if("row_main_text".equals(view.viewId)) {
+				if ("row_main_text".equals(view.viewId)) {
 					mainText = Utils.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
 					if (mainText.toString().trim().isEmpty())
 						break;
-				} else if("row_small_text".equals(view.viewId)) {
+				} else if ("row_small_text".equals(view.viewId)) {
 					secondaryText = Utils.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
-				} else if("row_image".equals(view.viewId)) {
+				} else if ("row_image".equals(view.viewId)) {
 					imageUrl = Utils.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure).toString();
 				}
+
 			}
 			if (mainText.toString().trim().isEmpty())
 				continue;
-
+			if (click != null) {
+				itemClicks.add(ContentClickFactory.createClick(fragment, parentElement, click));
+			}
 			content.add(new RowContent(imageUrl, mainText, secondaryText));
 		}
 		count = content.size();

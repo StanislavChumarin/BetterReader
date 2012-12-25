@@ -1,12 +1,44 @@
-{
-   "filter1" :
+{    "filter1" :
+          {
+             "url" : "http://www.ex.ua/",
+             "should_exist" : ".button a[href*=megogo]",
+             "screens" :
+                [
+                   {
+                      "layout_name" : "description_with_image",
+                      "title_selector" : "title",
+                      "data" :
+                         [
+                            {
+                               "type" : "text",
+                               "id" : "title_text",
+                               "selector" : "td>h1",
+                               "attr" : "text"
+                            },
+                            {
+                               "type" : "image",
+                               "id" : "big_image",
+                               "selector" : "#body_element tr:eq(0) img",
+                               "attr" : "src"
+                            },
+                            {
+                               "type" : "text",
+                               "id" : "description_text",
+                               "selector" : "#body_element td p:not(:has(.button))",
+                               "attr" : "text"
+                            }
+                         ]
+                   }
+                ]
+          },
+   "filter2" :
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".list",
          "screens" :
             [
                {
-                  "layout_name" : "description_with_image_and_file_list",
+                  "layout_name" : "description_with_image",
                   "title_selector" : "title",
                   "data" :
                      [
@@ -27,10 +59,17 @@
                            "id" : "description_text",
                            "selector" : "#body_element td:eq(0) p:not(:has(.r_button))",
                            "attr" : "text"
-                        },
+                        }
+                     ]
+               },
+               {
+                  "layout_name" : "single_list",
+                  "title_selector" : ".list tbody tr:eq(0) td>b",
+                  "data" :
+                     [
                         {
                            "type" : "list",
-                           "id" : "list_files",
+                           "id" : "list_content",
                            "selector" : ".list tr:not(:eq(0))",
                            "data" :
                               {
@@ -56,14 +95,20 @@
                                           "selector" : ".small b",
                                           "attr" : "text"
                                        }
-                                    ]
+                                    ],
+                                 "click" :
+                                    {
+                                       "action" : "download",
+                                       "selector" : ".small :eq(0) a",
+                                       "attr" : "abs:href"
+                                    }
                               }
                         }
                      ]
                }
             ]
       },
-   "filter2" :
+   "filter3" :
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".include_0>tbody>tr>td>a>img",
@@ -120,7 +165,7 @@
                }
             ]
       },
-   "filter3" :
+   "filter4" :
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".include_1 img",
@@ -177,7 +222,7 @@
                }
             ]
       },
-   "filter4" :
+   "filter5" :
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".include_0",
@@ -223,7 +268,7 @@
                }
             ]
       },
-   "filter5" :
+   "filter6" :
       {
          "url" : "http://www.ex.ua/",
          "should_exist" : ".menu_text",

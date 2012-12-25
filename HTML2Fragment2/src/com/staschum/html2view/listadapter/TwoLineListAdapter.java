@@ -1,7 +1,5 @@
 package com.staschum.html2view.listadapter;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,8 +86,6 @@ public class TwoLineListAdapter extends BaseListAdapter {
 		for (Element parentElement : elements) {
 
 			CharSequence mainText = "";
-
-			String imageUrl = "";
 			CharSequence secondaryText = "";
 
 			for (H2View view : h2Views) {
@@ -100,12 +96,14 @@ public class TwoLineListAdapter extends BaseListAdapter {
 				} else if ("row_small_text".equals(view.viewId)) {
 					secondaryText = Utils.getAttributeValue(parentElement.select(view.selector), (H2Attribute) view.innerStructure);
 				}
-				if (click != null) {
-					itemClicks.add(ContentClickFactory.createClick(fragment, parentElement, click));
-				}
+
 			}
 			if (mainText.toString().trim().isEmpty())
 				continue;
+
+			if (click != null) {
+				itemClicks.add(ContentClickFactory.createClick(fragment, parentElement, click));
+			}
 
 			Map<String, CharSequence> entry = new HashMap<String, CharSequence>();
 			entry.put(mainTextKey, mainText);
