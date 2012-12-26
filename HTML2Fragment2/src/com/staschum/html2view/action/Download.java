@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.codeslap.groundy.Groundy;
 import com.staschum.R;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -73,15 +74,17 @@ public class Download implements Click {
 
 			@Override
 			protected void onPostExecute(String s) {
-				DownloadManager.Request request = new DownloadManager.Request(Uri.parse(s));
-				request.setDescription("Some descrition");
-				request.setTitle("Some title");
+				String actualUrl = Uri.decode(s);
+				DownloadManager.Request request = new DownloadManager.Request(Uri.parse(Uri.encode(s, "%/:")));
+				request.setDescription(actualUrl);
+				String fileName = getFileName(actualUrl);
+				request.setTitle(fileName);
 // in order for this if to run, you must use the android 3.2 to compile your app
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 					request.allowScanningByMediaScanner();
 					request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 				}
-				request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "name-of-the-file.ext");
+				request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
 
 // get download service and enqueue file
 				DownloadManager manager = (DownloadManager) activity.getSystemService(Context.DOWNLOAD_SERVICE);
@@ -90,6 +93,15 @@ public class Download implements Click {
 		}.execute();
 
 
+	}
+
+	private String getFileName(String url) {
+		if (url == null)
+			return null;
+		String result = "";
+		File f = new File(url);
+		result = f.getName();
+		return result;
 	}
 
 	private class DownloadReceiver extends ResultReceiver {
