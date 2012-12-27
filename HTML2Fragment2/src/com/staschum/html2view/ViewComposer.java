@@ -1,19 +1,21 @@
 package com.staschum.html2view;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.os.ResultReceiver;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
-import com.staschum.html2view.fragments.ContentFragment;
-import com.staschum.html2view.managers.DescriptionManager;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.staschum.R;
 import com.staschum.html2view.objects.H2Filter;
 import com.staschum.html2view.objects.H2Screen;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,33 +32,24 @@ public class ViewComposer {
 	public ViewComposer(Activity activity, Map<String, H2Filter> filterMap) {
 		this.activity = activity;
 		this.filterMap = filterMap;
+		// Get singletone instance of ImageLoader
+		ImageLoader imageLoader = ImageLoader.getInstance();
+		DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+				.showStubImage(R.drawable.loading)
+				.showImageForEmptyUri(R.drawable.empty)
+				.resetViewBeforeLoading()
+				.cacheInMemory()
+				.cacheOnDisc()
+				.build();
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(activity)
+				.defaultDisplayImageOptions(defaultOptions)
+				.discCache(new UnlimitedDiscCache(new File(Environment.getExternalStorageDirectory(), "/BetterReaderData/Cache")))
+				.build();
+		// Initialize ImageLoader with configuration. Do it once.
+		imageLoader.init(config);
+		imageLoader.clearDiscCache();
+		imageLoader.clearMemoryCache();
 	}
-
-	public void createFragment(final String url, final int fileId, final FragmentReady fragmentReady) {
-
-//
-//		Utils.getHtmlByUrlAsync(url, new ResultReceiver(null) {
-//			@Override
-//			protected void onReceiveResult(int resultCode, Bundle resultData) {
-//				if (resultCode != Utils.STATUS_OK) {
-//					return;
-//				}
-//
-//				String htmlSource = resultData.getString(Utils.RESULT_KEY);
-//
-//				Document doc = Jsoup.parse(htmlSource, baseUrl);
-//
-//				FragmentDescriptor descriptor = new DescriptionManager(fragment).getDescription(url, doc, fileId, false);
-//
-//				ContentFragment fragment = ContentFragmentFactory.getFragment(baseUrl, descriptor.getLayoutName());
-//				List<FragmentDescriptor> fragmentData = descriptor.getData();
-//				fragment.setData(doc, fragmentData);
-//
-//				fragmentReady.fragmentReady(fragment);
-//			}
-//		});
-	}
-
 
 	public Map<String, Fragment> createFragments(String baseUrl, String htmlSource, String h2FilterName) {
 		return createFragments(baseUrl, htmlSource, defineFilterByName(h2FilterName));
@@ -115,13 +108,14 @@ public class ViewComposer {
 
 	/**
 	 * Use this method to define filter by specified name.
+	 *
 	 * @param h2FilterName name of filter that should be found
 	 * @return specified H2Filter or null if nothing found
 	 */
 	private H2Filter defineFilterByName(String h2FilterName) {
 		if (h2FilterName == null)
 			return null;
-		for(String name : filterMap.keySet()) {
+		for (String name : filterMap.keySet()) {
 			if (h2FilterName.equals(name))
 				return filterMap.get(h2FilterName);
 		}

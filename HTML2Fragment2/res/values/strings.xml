@@ -3,4 +3,5 @@
     <string name="app_name">ACTIVITY_ENTRY_NAME</string>
     <string name="loading_more">Loading more days...</string>
     <string name="file_downloaded">File downloaded</string>
+    <string name="refresh">Refresh</string>
 </resources>

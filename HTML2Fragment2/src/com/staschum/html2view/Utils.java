@@ -7,15 +7,11 @@ import android.text.Html;
 import android.util.Log;
 import com.staschum.html2view.objects.H2Attribute;
 import org.apache.http.util.ByteArrayBuffer;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -40,30 +36,6 @@ public abstract class Utils {
 		new AsyncHtmlGetter(url, resultReceiver).execute();
 	}
 
-	public static String removeTags(String innerHtml) {
-		String result = "";
-		int deepnesInTag = 0;
-		boolean isInAttributValue = false;
-		for (int i = 0; i < innerHtml.length(); i++) {
-			char c = innerHtml.charAt(i);
-			if (c == '<') {
-				deepnesInTag++;
-				continue;
-			}
-			if (deepnesInTag != 0 && c == '"') {
-				i = innerHtml.indexOf('"', i);
-				continue;
-			}
-			if (c == '>') {
-				deepnesInTag--;
-				continue;
-			}
-			if (deepnesInTag == 0)
-				result += c;
-		}
-		return result;
-	}
-
 	public static List<String> getValues(Elements items, String attr) {
 		List<String> result = new ArrayList<String>();
 		for (Element item : items) {
@@ -75,7 +47,7 @@ public abstract class Utils {
 	public static CharSequence getAttributeValue(Elements elements, String attribute) {
 		CharSequence result;
 		String regexp = null;
-		if(attribute.contains("(") && !attribute.contains(")")) {
+		if (attribute.contains("(") && attribute.contains(")")) {
 			regexp = attribute.substring(attribute.indexOf('(') + 1, attribute.lastIndexOf(')'));
 			attribute = attribute.substring(0, attribute.indexOf('('));
 		}
@@ -92,9 +64,8 @@ public abstract class Utils {
 		if (regexp != null) {
 			Pattern pattern = Pattern.compile(regexp);
 			Matcher matcher = pattern.matcher(result);
-			if (matcher.find())
-			{
-				result = matcher.group(1);
+			if (matcher.find()) {
+				result = matcher.group();
 			}
 		}
 		return result;
@@ -157,24 +128,5 @@ public abstract class Utils {
 		}
 
 	}
-
-	public static void CopyStream(InputStream is, OutputStream os)
-	{
-		final int buffer_size=1024;
-		try
-		{
-			byte[] bytes=new byte[buffer_size];
-			for(;;)
-			{
-				int count=is.read(bytes, 0, buffer_size);
-				if(count==-1)
-					break;
-				os.write(bytes, 0, count);
-			}
-		}
-		catch(Exception ex){}
-	}
-
-
 
 }

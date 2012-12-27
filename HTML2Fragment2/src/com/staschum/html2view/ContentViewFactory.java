@@ -1,17 +1,18 @@
 package com.staschum.html2view;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.support.v4.app.Fragment;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.staschum.html2view.action.Click;
-import com.staschum.html2view.imageloader.ImageLoader;
 import com.staschum.html2view.listadapter.BaseListAdapter;
 import com.staschum.html2view.objects.H2Adapter;
 import com.staschum.html2view.objects.H2Attribute;
 import com.staschum.html2view.objects.H2View;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 /**
@@ -23,7 +24,7 @@ import org.jsoup.nodes.Document;
  */
 public class ContentViewFactory {
 
-	public static enum ViewType{
+	public static enum ViewType {
 		TEXT {
 			@Override
 			public void setData(final Fragment fragment, final Document document, final H2View view) {
@@ -31,7 +32,7 @@ public class ContentViewFactory {
 				TextView textView = (TextView) fragment.getView().findViewById(id);
 				textView.setText(Utils.getAttributeValue(document.select(view.selector), (H2Attribute) view.innerStructure));
 
-				if(view.click != null) {
+				if (view.click != null) {
 					textView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -45,11 +46,14 @@ public class ContentViewFactory {
 			@Override
 			public void setData(Fragment fragment, final Document document, final H2View view) {
 				int id = fragment.getResources().getIdentifier(view.viewId, "id", fragment.getActivity().getPackageName());
-				String url = document.baseUri() + Utils.getAttributeValue(document.select(view.selector), (H2Attribute) view.innerStructure);
+				String imageUrl = (String) Utils.getAttributeValue(document.select(view.selector), (H2Attribute) view.innerStructure);
 				ImageView imageView = (ImageView) fragment.getView().findViewById(id);
-				ImageLoader.getInstance(fragment.getActivity()).DisplayImage(url, imageView);
+				// Get singletone instance of ImageLoader
+				ImageLoader imageLoader = ImageLoader.getInstance();
+				// Initialize ImageLoader with configuration. Do it once.
+				imageLoader.displayImage(imageUrl, imageView);
 
-				if(view.click != null) {
+				if (view.click != null) {
 					final Click click = ContentClickFactory.createClick(fragment, document, view.click);
 					imageView.setOnClickListener(new View.OnClickListener() {
 						@Override
@@ -68,7 +72,7 @@ public class ContentViewFactory {
 				final BaseListAdapter baseListAdapter = ListAdapterFactory.createListAdapter(fragment, document.select(view.selector), (H2Adapter) view.innerStructure);
 				listView.setAdapter(baseListAdapter);
 
-				if(((H2Adapter)view.innerStructure).click != null) {
+				if (((H2Adapter) view.innerStructure).click != null) {
 					listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 						@Override
 						public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -80,11 +84,48 @@ public class ContentViewFactory {
 					});
 				}
 
-				if(view.click != null) {
+				if (view.click != null) {
 					listView.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
 							ContentClickFactory.createClick(fragment, document, view.click).click();
+						}
+					});
+				}
+
+				if (view.pager != null) {
+					listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+						boolean loading = false;
+						Document lastPage;
+
+						@Override
+						public void onScrollStateChanged(AbsListView absListView, int i) {
+						}
+
+						@Override
+						public void onScroll(AbsListView absView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+							if (lastPage == null)
+								lastPage = document;
+							if (!loading && firstVisibleItem + visibleItemCount == totalItemCount) {
+								loading = true;
+								final String url = Utils.getAttributeValue(lastPage.select(view.pager.selector), view.pager.attribute).toString();
+								final String baseUri = document.baseUri();
+								Utils.getHtmlByUrlAsync(url, new ResultReceiver(new Handler()) {
+									@Override
+									protected void onReceiveResult(int resultCode, Bundle resultData) {
+										if (resultCode != Utils.STATUS_OK) {
+											loading = false;
+											return;
+										}
+										String html = resultData.getString(Utils.RESULT_KEY, "");
+										lastPage = Jsoup.parse(html, baseUri);
+										baseListAdapter.addData(lastPage.select(view.selector));
+										loading = false;
+									}
+								});
+
+							}
 						}
 					});
 				}
@@ -94,6 +135,7 @@ public class ContentViewFactory {
 		public abstract void setData(Fragment fragment, Document document, H2View view);
 
 	}
+
 	public static void createView(Fragment fragment, Document document, H2View view) {
 		ViewType.valueOf(view.viewType.toUpperCase()).setData(fragment, document, view);
 	}

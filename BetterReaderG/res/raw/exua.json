@@ -52,13 +52,13 @@
                            "type" : "image",
                            "id" : "big_image",
                            "selector" : "#body_element tr:eq(0) img",
-                           "attr" : "src"
+                           "attr" : "src(.[^\\?]+)"
                         },
                         {
                            "type" : "text",
                            "id" : "description_text",
                            "selector" : "#body_element td:eq(0) p:not(:has(.r_button))",
-                           "attr" : "text"
+                           "attr" : "html"
                         }
                      ]
                },
@@ -158,7 +158,7 @@
                            "pager" :
                               {
                                  "selector" : ".include_0 ~ table td:has(img[src*=arr_r]) a",
-                                 "attr" : "href"
+                                 "attr" : "abs:href"
                               }
                         }
                      ]
@@ -215,7 +215,7 @@
                            "pager" :
                               {
                                  "selector" : ".include_1 ~ table td:has(img[src*=arr_r]) a",
-                                 "attr" : "href"
+                                 "attr" : "abs:href"
                               }
                         }
                      ]

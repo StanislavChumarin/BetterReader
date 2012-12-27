@@ -1,7 +1,5 @@
 package com.staschum.html2view.listadapter;
 
-import android.app.Activity;
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +25,17 @@ import java.util.List;
  */
 public class OneLineListAdapter extends BaseListAdapter {
 
+	private final List<H2View> views;
+	private final H2Click click;
 	int count;
 	LayoutInflater inflater;
 
 	private List<CharSequence> content;
 
-	public OneLineListAdapter(Fragment fragment) {
+	public OneLineListAdapter(Fragment fragment, List<H2View> views, H2Click click) {
 		super(fragment);
+		this.views = views;
+		this.click = click;
 		inflater = fragment.getLayoutInflater(null);
 	}
 
@@ -72,9 +74,9 @@ public class OneLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void addData(Elements elements, List<H2View> views, H2Click click) {
+	public void addData(Elements elements) {
 		List<CharSequence> result = new ArrayList<CharSequence>();
-		if(views.isEmpty()) {
+		if (views.isEmpty()) {
 			return;
 		}
 		for (Element element : elements) {

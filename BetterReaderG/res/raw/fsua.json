@@ -94,7 +94,7 @@
                                           "type" : "image",
                                           "id" : "row_image",
                                           "selector" : ".b-poster",
-                                          "attr" : "style('(.*?)')"
+                                          "attr" : "style((?<=').*(?='))"
                                        },
                                        {
                                           "type" : "text",

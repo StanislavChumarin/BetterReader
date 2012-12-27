@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.staschum.R;
 import com.staschum.html2view.ContentClickFactory;
 import com.staschum.html2view.Utils;
-import com.staschum.html2view.imageloader.ImageLoader;
 import com.staschum.html2view.objects.H2Attribute;
 import com.staschum.html2view.objects.H2Click;
 import com.staschum.html2view.objects.H2View;
@@ -29,16 +29,18 @@ import java.util.List;
  */
 public class ImageW2LinesAdapter extends BaseListAdapter {
 
+	private final List<H2View> h2Views;
+	private final H2Click click;
 	private int count;
 	LayoutInflater inflater;
-	public ImageLoader imageLoader;
 
 	private List<RowContent> content = new ArrayList<RowContent>();
 
-	public ImageW2LinesAdapter(Fragment fragment) {
+	public ImageW2LinesAdapter(Fragment fragment, List<H2View> views, H2Click click) {
 		super(fragment);
+		this.h2Views = views;
+		this.click = click;
 		inflater = (LayoutInflater) fragment.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		imageLoader = ImageLoader.getInstance(fragment.getActivity());
 	}
 
 	@Override
@@ -72,12 +74,12 @@ public class ImageW2LinesAdapter extends BaseListAdapter {
 		mainText.setText(rowContent.getMainText());
 		secondaryText.setText(rowContent.getSecondaryText());
 
-		imageLoader.DisplayImage(rowContent.getImageUrl(), image);
+		ImageLoader.getInstance().displayImage(rowContent.getImageUrl(), image);
 		return vi;
 	}
 
 	@Override
-	public void addData(Elements elements, List<H2View> h2Views, H2Click click) {
+	public void addData(Elements elements) {
 
 		for (Element parentElement : elements) {
 

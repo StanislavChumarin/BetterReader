@@ -5,10 +5,9 @@ import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
-import android.os.*;
-import android.widget.Toast;
-import com.codeslap.groundy.Groundy;
-import com.staschum.R;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,14 +34,6 @@ public class Download implements Click {
 
 	@Override
 	public void click() {
-//		Bundle extras = new Bundle();
-//		extras.putString(DownloadResolver.PARAM_URL, url);
-//		Groundy.execute(activity, DownloadResolver.class, new DownloadReceiver(), extras);
-//
-//		mProgressDialog = new ProgressDialog(activity);
-//		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-//		mProgressDialog.setCancelable(false);
-//		mProgressDialog.show();
 		new AsyncTask<Void, Void, String>() {
 			@Override
 			protected String doInBackground(Void... voids) {
@@ -84,7 +75,12 @@ public class Download implements Click {
 					request.allowScanningByMediaScanner();
 					request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 				}
-				request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+				File file = new File(Environment.getExternalStorageDirectory(), "/BetterReaderData/Files");
+				if (!file.exists())
+					file.mkdirs();
+				file = new File(file, fileName);
+				request.setDestinationUri(Uri.fromFile(file));
+//				request.setDestinationInExternalPublicDir(android.os.Environment.getExternalStorageDirectory() + "/BetterReaderData/Files", fileName);
 
 // get download service and enqueue file
 				DownloadManager manager = (DownloadManager) activity.getSystemService(Context.DOWNLOAD_SERVICE);
@@ -98,33 +94,8 @@ public class Download implements Click {
 	private String getFileName(String url) {
 		if (url == null)
 			return null;
-		String result = "";
 		File f = new File(url);
-		result = f.getName();
+		String result = f.getName();
 		return result;
-	}
-
-	private class DownloadReceiver extends ResultReceiver {
-		public DownloadReceiver() {
-			super(new Handler());
-		}
-
-		@Override
-		protected void onReceiveResult(int resultCode, Bundle resultData) {
-			super.onReceiveResult(resultCode, resultData);
-			switch (resultCode) {
-				case Groundy.STATUS_PROGRESS:
-					mProgressDialog.setProgress(resultData.getInt(Groundy.KEY_PROGRESS));
-					break;
-				case Groundy.STATUS_FINISHED:
-					Toast.makeText(activity, activity.getString(R.string.file_downloaded), Toast.LENGTH_LONG);
-					mProgressDialog.dismiss();
-					break;
-				case Groundy.STATUS_ERROR:
-					Toast.makeText(activity, resultData.getString(Groundy.KEY_ERROR), Toast.LENGTH_LONG).show();
-					mProgressDialog.dismiss();
-					break;
-			}
-		}
 	}
 }

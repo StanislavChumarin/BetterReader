@@ -11,6 +11,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.slidingmenu.lib.SlidingMenu;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewer;
@@ -53,64 +56,80 @@ public class MainActivity extends BaseActivity implements ContentViewer {
 		url = getIntent().getStringExtra(URL);
 		filterName = getIntent().getStringExtra(FILTER_NAME);
 
-		if (url == null || url.isEmpty()) {
-			findViewById(R.id.spinning_thing).setVisibility(View.GONE);
-			return;
-		}
+		showParsedContent(url, filterName, false);
 
-		new AsyncTask<Void, Void, Map<String, Fragment>>() {
+	}
 
-			@Override
-			protected Map<String, Fragment> doInBackground(Void... voids) {
-				Map<String, Fragment> fragments = null;
-				try {
-					fragments = viewComposer.createFragments(url, filterName);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				return fragments;
-			}
+	private void showParsedContent(final String url, final String filterName, boolean inNewActivity) {
 
-			@Override
-			protected void onPostExecute(Map<String, Fragment> stringFragmentMap) {
-				super.onPostExecute(stringFragmentMap);
-				if (stringFragmentMap == null)
-					return;
+		if (inNewActivity) {
+			startActivity(createActivity(this, url, filterName));
+		} else {
 
-				viewPager = (ViewPager) findViewById(R.id.pager);
-				viewPager.setVisibility(View.VISIBLE);
-				viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), stringFragmentMap));
-				viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-					@Override
-					public void onPageScrolled(int i, float v, int i2) {
-					}
-
-					@Override
-					public void onPageSelected(int position) {
-						switch (position) {
-							case 0:
-								getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-								break;
-							default:
-								getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-								break;
-						}
-					}
-
-					@Override
-					public void onPageScrollStateChanged(int position) {
-					}
-				});
-
-				ActionBar actionBar = getSupportActionBar();
-				for (int i = 0; i < stringFragmentMap.entrySet().size(); i++) {
-					actionBar.addTab(getTab(actionBar));
-				}
+			if (url == null || url.isEmpty()) {
 				findViewById(R.id.spinning_thing).setVisibility(View.GONE);
+				return;
 			}
 
-		}.execute();
+			new AsyncTask<Void, Void, Map<String, Fragment>>() {
 
+				@Override
+				protected void onPreExecute() {
+					super.onPreExecute();
+					getSupportActionBar().removeAllTabs();
+				}
+
+				@Override
+				protected Map<String, Fragment> doInBackground(Void... voids) {
+					Map<String, Fragment> fragments = null;
+					try {
+						fragments = viewComposer.createFragments(url, filterName);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					return fragments;
+				}
+
+				@Override
+				protected void onPostExecute(Map<String, Fragment> stringFragmentMap) {
+					super.onPostExecute(stringFragmentMap);
+					if (stringFragmentMap == null)
+						return;
+
+					viewPager = (ViewPager) findViewById(R.id.pager);
+					viewPager.setVisibility(View.VISIBLE);
+					viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), stringFragmentMap));
+					viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+						@Override
+						public void onPageScrolled(int i, float v, int i2) {
+						}
+
+						@Override
+						public void onPageSelected(int position) {
+							switch (position) {
+								case 0:
+									getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+									break;
+								default:
+									getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+									break;
+							}
+						}
+
+						@Override
+						public void onPageScrollStateChanged(int position) {
+						}
+					});
+
+					ActionBar actionBar = getSupportActionBar();
+					for (int i = 0; i < stringFragmentMap.entrySet().size(); i++) {
+						actionBar.addTab(getTab(actionBar));
+					}
+					findViewById(R.id.spinning_thing).setVisibility(View.GONE);
+				}
+
+			}.execute();
+		}
 	}
 
 	private ActionBar.Tab getTab(ActionBar actionBar) {
@@ -134,16 +153,17 @@ public class MainActivity extends BaseActivity implements ContentViewer {
 	@Override
 	public void viewContent(String url, String filterName) {
 
-		getSlidingMenu().showContent();
-
-		startActivity(createActivity(this, url, filterName));
+		showParsedContent(url, filterName, true);
 	}
 
 	@Override
 	public void openSite(SupportedSite supportedSite) {
 		viewComposer = new ViewComposer(MainActivity.this, supportedSite.getFilters());
 		setTitle(supportedSite.getName());
-		viewContent(supportedSite.getUrl() + "/", null);
+		getSlidingMenu().showContent();
+		url = supportedSite.getUrl() + "/";
+		filterName = null;
+		showParsedContent(url, filterName, false);
 	}
 
 
@@ -174,6 +194,26 @@ public class MainActivity extends BaseActivity implements ContentViewer {
 		@Override
 		public CharSequence getPageTitle(int position) {
 			return titlesList.get(position);
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.refrash_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.refresh_menu_item:
+				findViewById(R.id.spinning_thing).setVisibility(View.VISIBLE);
+				getSupportActionBar().removeAllTabs();
+				showParsedContent(url, filterName, false);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 }

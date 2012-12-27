@@ -28,6 +28,8 @@ import java.util.Map;
  */
 public class TwoLineListAdapter extends BaseListAdapter {
 
+	private final List<H2View> h2Views;
+	private final H2Click click;
 	int count;
 	LayoutInflater inflater;
 	String mainTextKey = "main";
@@ -35,8 +37,10 @@ public class TwoLineListAdapter extends BaseListAdapter {
 
 	private List<Map<String, CharSequence>> content = new ArrayList<Map<String, CharSequence>>();
 
-	public TwoLineListAdapter(Fragment fragment) {
+	public TwoLineListAdapter(Fragment fragment, List<H2View> views, H2Click click) {
 		super(fragment);
+		this.h2Views = views;
+		this.click = click;
 		inflater = fragment.getLayoutInflater(null);
 	}
 
@@ -78,7 +82,7 @@ public class TwoLineListAdapter extends BaseListAdapter {
 	}
 
 	@Override
-	public void addData(Elements elements, List<H2View> h2Views, H2Click click) {
+	public void addData(Elements elements) {
 		if (h2Views.size() < 2) {
 			return;
 		}
