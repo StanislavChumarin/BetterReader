@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -41,9 +42,15 @@ public class ViewComposer {
 				.cacheInMemory()
 				.cacheOnDisc()
 				.build();
+		File cacheDir = new File(Environment.getExternalStorageDirectory(), "/BetterReaderData/Cache");
+		if (!cacheDir.exists()) {
+			cacheDir.mkdirs();
+		}
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(activity)
 				.defaultDisplayImageOptions(defaultOptions)
-				.discCache(new UnlimitedDiscCache(new File(Environment.getExternalStorageDirectory(), "/BetterReaderData/Cache")))
+				.threadPoolSize(5)
+				.memoryCache(new WeakMemoryCache())
+				.discCache(new UnlimitedDiscCache(cacheDir))
 				.build();
 		// Initialize ImageLoader with configuration. Do it once.
 		imageLoader.init(config);

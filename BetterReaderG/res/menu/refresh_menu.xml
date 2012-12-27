@@ -6,4 +6,9 @@
             android:icon="@drawable/refresh_icon"
             android:title="@string/refresh"
             android:showAsAction="always"/>
+    <item
+            android:id="@+id/downloads_menu_item"
+            android:icon="@drawable/download_icon"
+            android:title="@string/downloads"
+            android:showAsAction="always"/>
 </menu>

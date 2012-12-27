@@ -14,7 +14,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.slidingmenu.lib.SlidingMenu;
 import com.staschum.R;
 import com.staschum.html2view.ContentViewer;
 import com.staschum.html2view.SupportedSite;
@@ -99,27 +98,7 @@ public class MainActivity extends BaseActivity implements ContentViewer {
 					viewPager = (ViewPager) findViewById(R.id.pager);
 					viewPager.setVisibility(View.VISIBLE);
 					viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), stringFragmentMap));
-					viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-						@Override
-						public void onPageScrolled(int i, float v, int i2) {
-						}
 
-						@Override
-						public void onPageSelected(int position) {
-							switch (position) {
-								case 0:
-									getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-									break;
-								default:
-									getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-									break;
-							}
-						}
-
-						@Override
-						public void onPageScrollStateChanged(int position) {
-						}
-					});
 
 					ActionBar actionBar = getSupportActionBar();
 					for (int i = 0; i < stringFragmentMap.entrySet().size(); i++) {
@@ -200,7 +179,7 @@ public class MainActivity extends BaseActivity implements ContentViewer {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getSupportMenuInflater();
-		inflater.inflate(R.menu.refrash_menu, menu);
+		inflater.inflate(R.menu.refresh_menu, menu);
 		return true;
 	}
 
@@ -211,6 +190,10 @@ public class MainActivity extends BaseActivity implements ContentViewer {
 				findViewById(R.id.spinning_thing).setVisibility(View.VISIBLE);
 				getSupportActionBar().removeAllTabs();
 				showParsedContent(url, filterName, false);
+				return true;
+			case R.id.downloads_menu_item:
+				refreshDownloads();
+				getSlidingMenu().showSecondaryMenu();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
